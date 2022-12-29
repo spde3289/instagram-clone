@@ -7,7 +7,7 @@ const LoginPage = () => {
         <>
             <MainBox>
                 <Logo>
-                    로그인 페이지
+                    <div className='Logo'></div>
                 </Logo>
                 <LoginBox>
                     <IdBox/>
@@ -21,7 +21,9 @@ const LoginPage = () => {
                         또는
                     </div>
                     <FacebookLogin>
-                        <FacebookImg></FacebookImg>
+                        <FacebookImg>
+                            
+                        </FacebookImg>
                         <FacebookText>
                             Facebook으로 로그인
                         </FacebookText>
@@ -34,6 +36,9 @@ const LoginPage = () => {
 
 const MainBox = styled.div`
     display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
     width: 348px;
     height: 379.984px;
     padding: 10px 0;
@@ -41,12 +46,14 @@ const MainBox = styled.div`
 `;
 
 const Logo = styled.div`
-    border: 1px solid #000;
-    width: 175px;
-    height: 51px;
-    `;
+    background-image: url(https://static.cdninstagram.com/rsrc.php/v3/y5/r/TJztmXpWTmS.png);
+    background-repeat: no-repeat;
+    background-position: -414px -259px;
+    height: 16px;
+    width: 16px;
+`;
 
-const LoginBox = styled.div`
+const LoginBox = styled.form`
 `;
 
 const IdBox = styled.input`
@@ -63,6 +70,7 @@ const FacebookLogin = styled.button`
 `;
 
 const FacebookImg = styled.span`
+    
 `;
 
 const FacebookText = styled.span`
