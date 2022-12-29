@@ -1,10 +1,10 @@
 import React from "react";
-import { Route } from "react-router";
+import LoginPage from './page/LoginPage';
 
 function App() {
   return (
     <>
-      das
+      <LoginPage></LoginPage>
     </>
   );
 }
