@@ -4,7 +4,10 @@ import styled from 'styled-components';
 const LoginPage = () => {
 
     return(
-        <>
+        <Main>  
+            <SmartPhone>
+                
+            </SmartPhone>
             <MainBox>
                 <Logo>
                     <div className='Logo'></div>
@@ -30,13 +33,29 @@ const LoginPage = () => {
                     </FacebookLogin>
                 </LoginBox>
             </MainBox>
-        </>
+        </Main>
     );
 };
 
+const Main = styled.main`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
+
+const SmartPhone = styled.div`
+    width: 380.32px;
+    height: 601px;
+    background-image: url(https://static.cdninstagram.com/rsrc.php/v3/y4/r/ItTndlZM2n2.png);
+    background-size: 468.32px 634.15px;
+    background-position: -46px 639px;
+    margin-right: 32px;
+    margin-bottom: 12px;
+`;
+
 const MainBox = styled.div`
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 348px;
@@ -46,14 +65,17 @@ const MainBox = styled.div`
 `;
 
 const Logo = styled.div`
-    background-image: url(https://static.cdninstagram.com/rsrc.php/v3/y5/r/TJztmXpWTmS.png);
+    background-image: url(https://static.cdninstagram.com/rsrc.php/v3/y-/r/yXM3FgMdVNX.png);
+    background-position: 0px -52px;
+    background-size: auto;
+    width: 175px;
+    height: 51px;
     background-repeat: no-repeat;
-    background-position: -414px -259px;
-    height: 16px;
-    width: 16px;
+    display: inline-block;
 `;
 
 const LoginBox = styled.form`
+    width: 100px;
 `;
 
 const IdBox = styled.input`
