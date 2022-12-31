@@ -1,14 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
+import GlobalStyle from '../components/GlobalStyle';
 import smartPhoneImg from '../imgs/smartphone.png';
 import LogoImg from '../imgs/Logo.png';
+import imgs from '../imgs/imgs.png';
 
 const LoginPage = () => {
 
     return(
         <Main>  
+            <GlobalStyle/>
             <SmartPhone>
-                
             </SmartPhone>
             <div className="Ass">
                 <MainBox>
@@ -23,10 +25,10 @@ const LoginPage = () => {
                                 로그인
                             </div>
                         </LoginButton>
-                        <div>
+                        <Or>
                             또는
-                        </div>
-                        <FacebookLogin>
+                        </Or>
+                        <FacebookLogin type='button'>
                             <FacebookImg>
                                 
                             </FacebookImg>
@@ -75,13 +77,13 @@ const MainBox = styled.div`
     width: 348px;
     height: 379.984px;
     padding: 10px 0;
-    border: 1px solid #000;
+    border: 1px solid #cccccc;
     margin-bottom: 10px;
+    background-color: white;
 `;
 
 const Logo = styled.div`
-    background-image: url(${LogoImg}); //https://static.cdninstagram.com/rsrc.php/v3/y-/r/yXM3FgMdVNX.png
-    background-position: 0px -52px; 
+    background: url(${LogoImg}) no-repeat 0px -54px;; 
     background-size: auto;
     width: 175px;
     height: 51px;
@@ -90,33 +92,91 @@ const Logo = styled.div`
 
 const LoginBox = styled.form`
     display: flex;
+    flex-direction: column;
+    align-items: center;
     width: 348px;
     height: 266.984px;
-    flex-direction: column;
+    margin-top: 24px;
 `;
 
 const IdBox = styled.input`
-
+    width: 250px;
+    height: 20px;
+    margin: 0 40px 6px;
+    padding: 9px 0 7px 8px;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
 `;
 const PaswardBox = styled.input`
-
+    width: 250px;
+    height: 20px;
+    margin: 0 40px 6px;
+    padding: 9px 0 7px 8px;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
 `;
 
 const LoginButton = styled.button`
+    width: 268px;
+    height: 32px;
+    margin: 8px 40px;
+    background-color: rgb( 0, 149, 246);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    opacity: .7;
+`;
+
+const Or = styled.div`
+    position: relative;
+    font-size: 13px;
+    color: #8E8E8E;
+    margin: 10px 40px 18px;
+    &::before{
+        content: '';
+        position: absolute;
+        left: -119px;
+        right: 40px;
+        top: 9px;
+        border-top: 1px solid #BDBDBD;
+    };
+    &::after{
+        content: '';
+        position: absolute;
+        left: 40px;
+        right: -119px;
+        top: 9px;
+        border-top: 1px solid #BDBDBD;
+    }
 `;
 
 const FacebookLogin = styled.button`
+    width: 268px;
+    height: 20px;
+    margin: 8px 40px;
+    border: 0;
+    background-color: #FFFFFF;
 `;
 
 const FacebookImg = styled.span`
-    
+    background: url(${imgs}) no-repeat -414px -259px;
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+    position: relative;
+    top: 3px;
+    display: inline-block;
 `;
 
 const FacebookText = styled.span`
+    font-size: 13px;
+    color: #385185;
 `;
 
 const ForgotPassword = styled.a`
-
+    margin-top: 12px;
+    font-size: 12px;
+    color: #00376B;
 `;
 
 const SignUpBox = styled.div`
