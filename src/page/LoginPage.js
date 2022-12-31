@@ -4,6 +4,8 @@ import GlobalStyle from '../components/GlobalStyle';
 import smartPhoneImg from '../imgs/smartphone.png';
 import LogoImg from '../imgs/Logo.png';
 import imgs from '../imgs/imgs.png';
+import GLink from '../imgs/GLink.png';
+import MsLink from '../imgs/MsLink.png';
 
 const LoginPage = () => {
 
@@ -41,7 +43,18 @@ const LoginPage = () => {
                         </ForgotPassword>
                     </LoginBox>
                 </MainBox>
-                <SignUpBox></SignUpBox>
+                <SignUpBox>
+                    <p className="text">
+                        계정이 없으신가요? <a href='/' className='link'>가입하기</a>
+                    </p>
+                </SignUpBox>
+                <DownLodeBox>
+                    <p className='text'>앱을 다운로드하세요.</p>
+                    <div>
+                        <a href='/'><img className='downimg' alt="구글다운로드링크" src={GLink}/></a>
+                        <a href='/'><img className='downimg' alt="MS다운링크" src={MsLink}/></a>
+                    </div>
+                </DownLodeBox>
             </div>
         </Main>
     );
@@ -107,6 +120,7 @@ const IdBox = styled.input`
     border: 1px solid #cccccc;
     border-radius: 5px;
 `;
+
 const PaswardBox = styled.input`
     width: 250px;
     height: 20px;
@@ -180,9 +194,35 @@ const ForgotPassword = styled.a`
 `;
 
 const SignUpBox = styled.div`
+    background-color: #fff;
     width: 348px;
     height: 41px;
-    border: 1px solid black;
+    border: 1px solid #cccccc;
+    padding: 10px 0;
+    margin-bottom: 10px;
+    .text{
+        color: rgb(38,38,38);
+        margin: 12px;
+        text-align: center;
+        font-size: 14px;
+    };
+    .link{
+        text-decoration: none;
+        color: #0095f6;
+    }
+`;
+
+const DownLodeBox = styled.div`
+    .text{
+        margin: 10px 20px;
+        border: 0;
+        font-size: 14px;
+        line-height: 18px;
+    }
+    .downimg{
+        width: 134.281px;
+        height:40px;
+    }
 `;
 
 export default LoginPage;
