@@ -4,6 +4,7 @@ const GlobalStyle = createGlobalStyle`
   body{
     background: rgba(216, 216, 216, 0.171);
     margin: 0;
+    overflow: hidden;
   };
 
   h2, p {
