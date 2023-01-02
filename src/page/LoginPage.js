@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import GlobalStyle from '../components/GlobalStyle';
 import smartPhoneImg from '../imgs/smartphone.png';
@@ -9,62 +9,188 @@ import MsLink from '../imgs/MsLink.png';
 
 const LoginPage = () => {
 
+    const [IdOn, setIdOn] = useState(false);
+    const [PasswardOn, setPasswardOn] = useState(false);
+    const [currentImg, setCurrentImg] = useState([
+        { key:1, current:1, class:'img1', src:require("../imgs/screenshot1.png") },
+        { key:2, current:0, class:'img2', src:require("../imgs/screenshot2.png")},
+        { key:3, current:0, class:'img3', src:require("../imgs/screenshot3.png")},
+        { key:4, current:0, class:'img4', src:require("../imgs/screenshot4.png")}
+    ]);
+
+    const wallPaper = [...currentImg].map(img=>(
+        <Wallpapers
+            key={img.key}
+            className={img.class + (!img.current ? " hidden" : "")}
+            src={img.src}
+        ></Wallpapers>
+    ));
+    
+    const imgHandler = (type) => {
+        let currentIndex = currentImg.findIndex(img => img.current === 1);
+        let updateIndex = type === 'prev'
+        ? currentIndex -1
+        : currentIndex + 1
+
+        if(updateIndex === currentImg.length ){
+            updateIndex = 0 
+        }else if(updateIndex === -1)(
+            updateIndex = currentImg.length -1
+        );
+        
+        setCurrentImg([...currentImg].map((img, index)=>{
+            return {
+                key : img.key,
+                current: index === updateIndex ? 1 : 0, 
+                class: img.class,
+                src : img.src
+            };
+        }));
+    };
+    useEffect(()=>{
+        if(true){
+        const slide =  setInterval(()=>{imgHandler('next')}, 4500)
+        return () => {clearInterval(slide)}
+        };
+    });
+
+    const addIdClass = (e) => {
+        setIdOn(true)
+        if(e.target.value.length === 0){
+            setIdOn(false)
+        }
+    };
+
+    const addPasswardClass = (e) => {
+        setPasswardOn(true)
+        if(e.target.value.length === 0){
+            setPasswardOn(false)
+        }
+    };
+
+
+
     return(
-        <Main>  
-            <GlobalStyle/>
-            <SmartPhone>
-            </SmartPhone>
-            <div className="Ass">
-                <MainBox>
-                    <Logo>
-                        <div></div>
-                    </Logo>
-                    <LoginBox>
-                        <IdBox/>
-                        <PaswardBox/>
-                        <LoginButton>
-                            <div>
-                                로그인
+        <>
+            <Main>  
+                <Article>
+                    <GlobalStyle/>
+                    <SmartPhone>
+                        <div className='imgs'>
+                            {wallPaper}
+                        </div>
+                    </SmartPhone>
+                    <div className="Ass">
+                        <MainBox>
+                            <Logo>
+                                <div></div>
+                            </Logo>
+                            <LoginBox>
+                                <A>
+                                    <PlaceHolder className={ IdOn ? 'target' : ''}>
+                                        전화번호, 사용자 이름 또는 이메일
+                                    </PlaceHolder>
+                                    <LoginInputBox className={ IdOn ? 'target' : '' } 
+                                    aria-label='전화번호, 사용자 이름 또는 이메일' 
+                                    aria-required='true'
+                                    onChange={e=>{addIdClass(e)}}/>
+                                </A>
+                                <A>
+                                    <PlaceHolder className={ PasswardOn ? 'target' : ''}>
+                                        비밀번호
+                                    </PlaceHolder>
+                                    <LoginInputBox className={ PasswardOn ? 'target' : '' } 
+                                    aria-label='비밀번호' 
+                                    aria-required='true'
+                                    type='password'
+                                    onChange={e=>{addPasswardClass(e)}} />
+                                </A>
+                                <LoginButton>
+                                    <div>
+                                        로그인
+                                    </div>
+                                </LoginButton>
+                                <Or>
+                                    또는
+                                </Or>
+                                <FacebookLogin type='button'>
+                                    <FacebookImg/>
+                                    <FacebookText>
+                                        Facebook으로 로그인
+                                    </FacebookText>
+                                </FacebookLogin>
+                                <ForgotPassword>
+                                    비밀번호를 잊어셨나요?
+                                </ForgotPassword>
+                            </LoginBox>
+                        </MainBox>
+                        <SignUpBox>
+                            <p className="text">
+                                계정이 없으신가요? <a href='/' className='link'>가입하기</a>
+                            </p>
+                        </SignUpBox>
+                        <DownLodeBox>
+                            <p className='text'>앱을 다운로드하세요.</p>
+                            <div className='downimg'>
+                                <a href='/'><img className='gimg' alt="구글다운로드링크" src={GLink}/></a>
+                                <a href='/'><img className='msimg' alt="MS다운링크" src={MsLink}/></a>
                             </div>
-                        </LoginButton>
-                        <Or>
-                            또는
-                        </Or>
-                        <FacebookLogin type='button'>
-                            <FacebookImg>
-                                
-                            </FacebookImg>
-                            <FacebookText>
-                                Facebook으로 로그인
-                            </FacebookText>
-                        </FacebookLogin>
-                        <ForgotPassword>
-                            비밀번호를 잊어셨나요?
-                        </ForgotPassword>
-                    </LoginBox>
-                </MainBox>
-                <SignUpBox>
-                    <p className="text">
-                        계정이 없으신가요? <a href='/' className='link'>가입하기</a>
-                    </p>
-                </SignUpBox>
-                <DownLodeBox>
-                    <p className='text'>앱을 다운로드하세요.</p>
-                    <div>
-                        <a href='/'><img className='downimg' alt="구글다운로드링크" src={GLink}/></a>
-                        <a href='/'><img className='downimg' alt="MS다운링크" src={MsLink}/></a>
+                        </DownLodeBox>
                     </div>
-                </DownLodeBox>
-            </div>
-        </Main>
+                </Article>
+            </Main>
+            <Footer>
+                <InfoBox>
+                    <a href='/' className='link'>
+                        <Corp>Meta</Corp>
+                    </a>
+                    <a href='/' className='link'>
+                        <Corp>소개</Corp>
+                    </a>
+                    <a href='/' className='link'>
+                        <Corp>블로그</Corp>
+                    </a>
+                    <a href='/' className='link'>
+                        <Corp>채용 정보</Corp>
+                    </a>
+                    <a href='/' className='link'>
+                        <Corp>도움말</Corp>
+                    </a>
+                    <a href='/' className='link'>
+                        <Corp>API</Corp>
+                    </a>
+                    <a href='/' className='link'>
+                        <Corp>개인정보처리방침</Corp>
+                    </a>
+                    <a href='/' className='link'>
+                        <Corp>약관</Corp>
+                    </a>
+                    <a href='/' className='link'>
+                        <Corp>인기 계정</Corp>
+                    </a>
+                    <a href='/' className='link'>
+                        <Corp>위치</Corp>
+                    </a>
+                    <a href='/' className='link'>
+                        <Corp>Instagram Lite</Corp>
+                    </a>
+                    <a href='/' className='link'>
+                        <Corp>연락처 업로드 & 비사용자</Corp>
+                    </a>
+                </InfoBox>
+                <Service>
+                    <Language>
+                        <option>한국어</option>
+                    </Language>
+                    <div className='insta'>© 2023 Instagram from Meta</div>
+                </Service>
+            </Footer>
+        </>
     );
 };
 
 const Main = styled.main`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 32px;
+    box-sizing: border-box;
     .Ass{
         display: flex;
         height: 727px;
@@ -74,12 +200,42 @@ const Main = styled.main`
     }
 `;
 
+const Article = styled.article`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 32px;
+    padding-bottom: 32px;
+`;
+
 const SmartPhone = styled.div`
     width: 380.312px;
     height: 581.15px;
     background: url(${smartPhoneImg}) no-repeat -46px 0px;
     margin-right: 32px;
     margin-bottom: 12px;
+
+`;
+
+const Wallpapers = styled.img.attrs({alt:'배경화면 이미지'})`
+    position: relative;
+    left: 110px;
+    transition: opacity .9s linear;
+    &.img1{
+        top:27px;
+    }
+    &.img2{
+        top:-519px;
+    }
+    &.img3{
+        top:-1063px;
+    }
+    &.img4{
+        top:-1609px;
+    }
+    &.hidden{
+        opacity: 0;
+    }
 `;
 
 const MainBox = styled.div`
@@ -110,24 +266,46 @@ const LoginBox = styled.form`
     width: 348px;
     height: 266.984px;
     margin-top: 24px;
+    .text{
+        overflow: hidden;
+    }
+
 `;
 
-const IdBox = styled.input`
+const LoginInputBox = styled.input`
     width: 250px;
     height: 20px;
-    margin: 0 40px 6px;
     padding: 9px 0 7px 8px;
     border: 1px solid #cccccc;
     border-radius: 5px;
+    outline: none;
+    background: rgba(216, 216, 216, 0.171);
+    &.target{
+        font-size: 12px;
+        padding: 14px 0 2px 8px !important;
+    }
 `;
 
-const PaswardBox = styled.input`
-    width: 250px;
-    height: 20px;
+const A = styled.div`
     margin: 0 40px 6px;
-    padding: 9px 0 7px 8px;
-    border: 1px solid #cccccc;
-    border-radius: 5px;
+    position: relative;
+`;
+
+const PlaceHolder = styled.span`
+    position: absolute;
+    top: 10.5px;
+    left: 10px;
+    height: 36px;
+    font-size: 12px;
+    color: rgb(142, 142, 142);
+    transition: ease-out .1s;
+    &.target{
+        position: absolute;
+        top: 10px;
+        left: 5px;
+        transition: transform ease-out .1s;
+        transform: scale(calc(10 / 11)) translateY(-10px);
+    }
 `;
 
 const LoginButton = styled.button`
@@ -153,7 +331,7 @@ const Or = styled.div`
         right: 40px;
         top: 9px;
         border-top: 1px solid #BDBDBD;
-    };
+    }
     &::after{
         content: '';
         position: absolute;
@@ -205,7 +383,7 @@ const SignUpBox = styled.div`
         margin: 12px;
         text-align: center;
         font-size: 14px;
-    };
+    }
     .link{
         text-decoration: none;
         color: #0095f6;
@@ -213,16 +391,63 @@ const SignUpBox = styled.div`
 `;
 
 const DownLodeBox = styled.div`
+    display: flex;
+    flex-direction: column;
     .text{
         margin: 10px 20px;
         border: 0;
         font-size: 14px;
         line-height: 18px;
+        text-align: center;
     }
-    .downimg{
+    .gimg{
         width: 134.281px;
         height:40px;
+        margin-right: 8px;
     }
+    .msimg{
+        width: 110.766px;
+        height: 40px;
+    }
+    .downimg{
+        margin: 10px;
+    }
+`;
+
+const Footer = styled.footer`
+    padding: 0 16px;
+    margin-top: 24px;
+    .link{
+        text-decoration: none;
+        color: #8E8E8E;
+    }
+`;
+
+const InfoBox = styled.div`
+    display: flex;
+    justify-content: center;
+`;
+
+const Corp =styled.div`
+    margin: 0 8px 12px;
+    font-size: 12px;
+`;
+
+const Service = styled.div`
+    display: flex;
+    justify-content: center;
+    margin: 12px 0;
+    .insta{
+        margin-left: 16px;
+        font-size: 12px;
+        color: #8E8E8E;
+    }
+`;
+
+const Language = styled.select`
+    border: none;
+    background: rgba(216, 216, 216, 0);
+    color: #8E8E8E;
 `;
 
 export default LoginPage;
