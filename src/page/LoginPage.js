@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import GlobalStyle from '../components/GlobalStyle';
 import smartPhoneImg from '../imgs/smartphone.png';
@@ -11,6 +11,7 @@ const LoginPage = () => {
 
     const [IdOn, setIdOn] = useState(false);
     const [PasswardOn, setPasswardOn] = useState(false);
+    const input = useRef();
     const [currentImg, setCurrentImg] = useState([
         { key:1, current:1, class:'img1', src:require("../imgs/screenshot1.png") },
         { key:2, current:0, class:'img2', src:require("../imgs/screenshot2.png")},
@@ -68,7 +69,9 @@ const LoginPage = () => {
         }
     };
 
-
+    const inputOnClick = () => {
+        input.current.focus();
+    };
 
     return(
         <>
@@ -87,13 +90,17 @@ const LoginPage = () => {
                             </Logo>
                             <LoginBox>
                                 <A>
-                                    <PlaceHolder className={ IdOn ? 'target' : ''}>
+                                    <PlaceHolder className={ IdOn ? 'Idtarget' : ''}
+                                    onClick={()=>{inputOnClick()}}>
                                         전화번호, 사용자 이름 또는 이메일
                                     </PlaceHolder>
                                     <LoginInputBox className={ IdOn ? 'target' : '' } 
                                     aria-label='전화번호, 사용자 이름 또는 이메일' 
                                     aria-required='true'
-                                    onChange={e=>{addIdClass(e)}}/>
+                                    ref={input}
+                                    onChange={e=>{
+                                        addIdClass(e);
+                                    }}/>
                                 </A>
                                 <A>
                                     <PlaceHolder className={ PasswardOn ? 'target' : ''}>
@@ -103,7 +110,9 @@ const LoginPage = () => {
                                     aria-label='비밀번호' 
                                     aria-required='true'
                                     type='password'
-                                    onChange={e=>{addPasswardClass(e)}} />
+                                    onChange={e=>{
+                                        addPasswardClass(e);
+                                    }} />
                                 </A>
                                 <LoginButton>
                                     <div>
@@ -299,6 +308,13 @@ const PlaceHolder = styled.span`
     font-size: 12px;
     color: rgb(142, 142, 142);
     transition: ease-out .1s;
+    &.Idtarget{
+        position: absolute;
+        top: 10px;
+        left: 0px;
+        transition: transform ease-out .1s;
+        transform: scale(calc(10 / 11)) translateY(-10px);
+    }
     &.target{
         position: absolute;
         top: 10px;
