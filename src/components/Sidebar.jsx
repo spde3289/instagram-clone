@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 // 아이콘 
@@ -11,14 +11,23 @@ import {
     AiOutlineCompass, 
     AiOutlineHeart, 
     AiOutlinePlusSquare,
-    AiOutlineMenu 
+    AiOutlineMenu,
+    AiOutlineSetting,
+    AiOutlineFieldTime
 } from 'react-icons/ai';
-import { HiOutlinePaperAirplane } from 'react-icons/hi';
+import { RxBookmark } from 'react-icons/rx'
+import { BiMessageAltError } from 'react-icons/bi'
+import { 
+    HiOutlinePaperAirplane,
+    HiOutlineMoon,
+} from 'react-icons/hi';
+
 // 이미지
 import LogoImg from '../imgs/Logo.png'
 
 const Sidebar = () => {
 
+    const [open, setOpen] = useState(false)
     const menuList = [
         {key: 1, text: '홈', icon: <MdHomeFilled className="icon"/> },
         {key: 2, text: '검색', icon: <AiOutlineSearch className="icon"/> },
@@ -37,7 +46,61 @@ const Sidebar = () => {
         </Menu>
     ));
 
+    useEffect(()=>{
+        MoreSubMenuFun(open)
+    },[open])
 
+    const MoreSubMenuFun = (a) => {
+            console.log(a)
+        return(
+            <MoreSubMenuBox>
+                <MoreSubMenu>
+                    <MoreSubMenuItem>
+                        <MenuText className='set'>
+                            설정
+                        </MenuText>
+                        <AiOutlineSetting className='icon'/>
+                    </MoreSubMenuItem>
+                    <MoreSubMenuItem>
+                        <MenuText className='set'>
+                            저장됨
+                        </MenuText>
+                        <RxBookmark className='icon'/>
+                    </MoreSubMenuItem>
+                    <MoreSubMenuItem>
+                        <MenuText className='set'>
+                            모드 전환
+                        </MenuText>
+                        <HiOutlineMoon className='icon'/>
+                    </MoreSubMenuItem>
+                    <MoreSubMenuItem>
+                        <MenuText className='set'>
+                            내 활동
+                        </MenuText>
+                        <AiOutlineFieldTime className='icon'/>
+                    </MoreSubMenuItem>
+                    <MoreSubMenuItem>
+                        <MenuText className='set'>
+                            문제 신고
+                        </MenuText>
+                        <BiMessageAltError className='icon'/>
+                    </MoreSubMenuItem>
+                </MoreSubMenu>
+                <MoreSubMenu>
+                    <MoreSubMenuItem>
+                        <MenuText className='set'>
+                            계정 전환
+                        </MenuText>
+                    </MoreSubMenuItem>
+                    <MoreSubMenuItem>
+                        <MenuText className='set'>
+                            로그아웃
+                        </MenuText>
+                    </MoreSubMenuItem>
+                </MoreSubMenu>
+            </MoreSubMenuBox>
+        );
+    }
 
     return(
         <Nav>
@@ -53,11 +116,17 @@ const Sidebar = () => {
                     {menu}
                 </MenuList>
             </div>
-            <More className="cursor">
+            { open ? <MoreSubMenuFun/> : <></> }
+            <More 
+            className="cursor"
+            onClick={()=>{
+                setOpen(!open);
+            }}>
                 <AiOutlineMenu className="icon" />
-                <MoreText>
+                <MenuText className="more">
                     더보기
-                </MoreText>
+                </MenuText>
+
             </More>
         </Nav>
     );
@@ -100,6 +169,7 @@ const Logo = styled.div`
 `;
 
 const MenuList = styled.ul`
+    
 `;
 
 const Menu = styled.li`
@@ -117,6 +187,12 @@ const MenuText = styled.div`
     padding-left: 16px;
     font-size: 16px;
     color: #262626;
+    &.more{
+        height: 24px;
+    };
+    &.set{
+       padding-left: 0;
+    };
 `;
 
 const More = styled.div`
@@ -127,9 +203,26 @@ const More = styled.div`
     align-items: center;
 `;
 
-const MoreText = styled.div`
-    height: 24px;
-    padding-left: 16px;
+const MoreSubMenuBox = styled.div`
+    position: absolute;
+    bottom: 64px;
+    display: flex;
+    flex-direction: column;
 `;
+
+const MoreSubMenu = styled.ul`
+    width: 238px;
+    
+`;
+
+const MoreSubMenuItem = styled.li`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 16px;
+    background-color: transparent;
+    border: 1px solid #cccccc;
+`;
+
 
 export default Sidebar;
