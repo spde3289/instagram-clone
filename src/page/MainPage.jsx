@@ -1,37 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
-//
-import { 
-    MdHomeFilled, 
-    MdOutlineSlowMotionVideo 
-} from 'react-icons/md' ;  
-import { 
-    AiOutlineSearch, 
-    AiOutlineCompass, 
-    AiOutlineHeart, 
-    AiOutlinePlusSquare 
-} from 'react-icons/ai';
-import { HiOutlinePaperAirplane } from 'react-icons/hi';
+
+// 컴포넌트 
+import GlobalStyle from '../components/GlobalStyle';
+import Sidebar from '../components/Sidebar'
 
 const MainPage = () => {
     return(
         <Layout>
-            <Sidebar>
-                <div>로고 </div>
-                <ul>
-                    <li><MdHomeFilled/> 홈</li>
-                    <li><AiOutlineSearch/> 검색</li>
-                    <li><AiOutlineCompass/>탐색 탭</li>
-                    <li><MdOutlineSlowMotionVideo/> 릴스</li>
-                    <li><HiOutlinePaperAirplane/>메시지</li>
-                    <li><AiOutlineHeart/>알림</li>
-                    <li><AiOutlinePlusSquare/>만들기</li>
-                    <li>프로필</li>
-                </ul>
-                <div>
-                    더보기
-                </div>
-            </Sidebar>
+            <GlobalStyle/>
+            <Sidebar/>
             <Main>
                 <PostBox>
                     메인 페이지 
@@ -43,10 +21,7 @@ const MainPage = () => {
 
 const Layout = styled.div`
     display: flex;
-`
-
-const Sidebar = styled.nav`
-    display: flex;
+    height: 100vh;
 `;
 
 const Main = styled.main`
