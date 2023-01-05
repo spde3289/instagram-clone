@@ -207,7 +207,7 @@ const Main = styled.main`
         align-items: center;
         flex-direction: column;
         justify-content: center;
-    }
+    };
 `;
 
 const Article = styled.article`
@@ -224,7 +224,6 @@ const SmartPhone = styled.div`
     background: url(${smartPhoneImg}) no-repeat -46px 0px;
     margin-right: 32px;
     margin-bottom: 12px;
-
 `;
 
 const Wallpapers = styled.img.attrs({alt:'배경화면 이미지'})`
@@ -233,19 +232,19 @@ const Wallpapers = styled.img.attrs({alt:'배경화면 이미지'})`
     transition: opacity .9s linear;
     &.img1{
         top:27px;
-    }
+    };
     &.img2{
         top:-519px;
-    }
+    };
     &.img3{
         top:-1063px;
-    }
+    };
     &.img4{
         top:-1609px;
-    }
+    };
     &.hidden{
         opacity: 0;
-    }
+    };
 `;
 
 const MainBox = styled.div`
@@ -262,7 +261,7 @@ const MainBox = styled.div`
 `;
 
 const Logo = styled.div`
-    background: url(${LogoImg}) no-repeat 0px -54px;; 
+    background: url(${LogoImg}) no-repeat 0px -54px;
     background-size: auto;
     width: 175px;
     height: 51px;
@@ -278,8 +277,7 @@ const LoginBox = styled.form`
     margin-top: 24px;
     .text{
         overflow: hidden;
-    }
-
+    };
 `;
 
 const LoginInputBox = styled.input`
@@ -293,7 +291,7 @@ const LoginInputBox = styled.input`
     &.target{
         font-size: 12px;
         padding: 14px 0 2px 8px !important;
-    }
+    };
 `;
 
 const A = styled.div`
@@ -315,14 +313,14 @@ const PlaceHolder = styled.span`
         left: 0px;
         transition: transform ease-out .1s;
         transform: scale(calc(10 / 11)) translateY(-10px);
-    }
+    };
     &.target{
         position: absolute;
         top: 10px;
         left: 5px;
         transition: transform ease-out .1s;
         transform: scale(calc(10 / 11)) translateY(-10px);
-    }
+    };
 `;
 
 const LoginButton = styled.button`
@@ -348,7 +346,7 @@ const Or = styled.div`
         right: 40px;
         top: 9px;
         border-top: 1px solid #BDBDBD;
-    }
+    };
     &::after{
         content: '';
         position: absolute;
@@ -356,7 +354,7 @@ const Or = styled.div`
         right: -119px;
         top: 9px;
         border-top: 1px solid #BDBDBD;
-    }
+    };
 `;
 
 const FacebookLogin = styled.button`
@@ -400,11 +398,11 @@ const SignUpBox = styled.div`
         margin: 12px;
         text-align: center;
         font-size: 14px;
-    }
+    };
     .link{
         text-decoration: none;
         color: #0095f6;
-    }
+    };
 `;
 
 const DownLodeBox = styled.div`
@@ -416,19 +414,19 @@ const DownLodeBox = styled.div`
         font-size: 14px;
         line-height: 18px;
         text-align: center;
-    }
+    };
     .gimg{
         width: 134.281px;
         height:40px;
         margin-right: 8px;
-    }
+    };
     .msimg{
         width: 110.766px;
         height: 40px;
-    }
+    };
     .downimg{
         margin: 10px;
-    }
+    };
 `;
 
 const Footer = styled.footer`
@@ -437,7 +435,7 @@ const Footer = styled.footer`
     .link{
         text-decoration: none;
         color: #8E8E8E;
-    }
+    };
 `;
 
 const InfoBox = styled.div`
@@ -458,7 +456,7 @@ const Service = styled.div`
         margin-left: 16px;
         font-size: 12px;
         color: #8E8E8E;
-    }
+    };
 `;
 
 const Language = styled.select`
