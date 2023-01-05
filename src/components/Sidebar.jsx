@@ -108,7 +108,7 @@ const Menu = styled.li`
     margin: 4px 0;
     padding: 12px;
     box-sizing: border-box;
-    &:visited{
+    &:active{
         font-weight: bold;
     }
 `;
