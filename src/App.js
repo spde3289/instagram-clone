@@ -10,16 +10,17 @@ import ErrorPage from "./error-page";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <MainPage  />,
+    element: <MainPage/>,
     errorElement: <ErrorPage />,
+    children: [{
+      path: "/",
+    }]
   },
 ]);
 
 function App() {
   return (
-    <>
       <RouterProvider router={router} />
-    </>
   );
 }
 
