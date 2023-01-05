@@ -1,10 +1,17 @@
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
-  body{
+
+  body {
     background: rgba(216, 216, 216, 0.171);
     margin: 0;
-    overflow: hidden;
+  };
+
+  ul, li {
+    text-decoration: none;
+    list-style:none;
+    padding-left:0px;
+    margin: 0;
   };
 
   h2, p {
