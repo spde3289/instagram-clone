@@ -201,6 +201,7 @@ const LoginPage = () => {
 
 const Main = styled.main`
     box-sizing: border-box;
+    overflow: hidden;
     .Ass{
         display: flex;
         height: 727px;
