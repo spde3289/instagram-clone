@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef} from 'react';
 import styled from 'styled-components';
 
 // 아이콘 
@@ -28,6 +28,7 @@ import LogoImg from '../imgs/Logo.png'
 const Sidebar = () => {
 
     const [open, setOpen] = useState(false)
+    const ref = useRef()
     const menuList = [
         {key: 1, text: '홈', icon: <MdHomeFilled className="icon"/> },
         {key: 2, text: '검색', icon: <AiOutlineSearch className="icon"/> },
@@ -46,16 +47,25 @@ const Sidebar = () => {
         </Menu>
     ));
 
-    useEffect(()=>{
-        MoreSubMenuFun(open)
-    },[open])
+    const handleClickOutSide = (e) => {
+        console.log(ref.current.contains(e.target));
+        if (open && !ref.current.contains(e.target)) {
+          setOpen(false);
+        };
+    };
+    
+      useEffect(() => {
+        if (open) document.addEventListener('mousedown', handleClickOutSide);
+        return () => {
+          document.removeEventListener('mousedown', handleClickOutSide);
+        };
+    });
 
     const MoreSubMenuFun = (a) => {
-            console.log(a)
         return(
             <MoreSubMenuBox>
                 <MoreSubMenu>
-                    <MoreSubMenuItem>
+                    <MoreSubMenuItem className="first">
                         <MenuText className='set'>
                             설정
                         </MenuText>
@@ -87,7 +97,7 @@ const Sidebar = () => {
                     </MoreSubMenuItem>
                 </MoreSubMenu>
                 <MoreSubMenu>
-                    <MoreSubMenuItem>
+                    <MoreSubMenuItem className='account'>
                         <MenuText className='set'>
                             계정 전환
                         </MenuText>
@@ -103,7 +113,7 @@ const Sidebar = () => {
     }
 
     return(
-        <Nav>
+        <Nav ref={ref}>
             <div>
                 <div>
                     <LogoBox>
@@ -156,7 +166,7 @@ const Nav = styled.nav`
 const LogoBox = styled.div`
     box-sizing: border-box;
     padding: 25px 12px 16px;
-    margin-bottom: 19px;
+    margin-bottom: 15px;
 `;
 
 const Logo = styled.div`
@@ -205,14 +215,16 @@ const More = styled.div`
 
 const MoreSubMenuBox = styled.div`
     position: absolute;
-    bottom: 64px;
+    left: 20px;
+    bottom: 80px;
     display: flex;
     flex-direction: column;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, .0975);
 `;
 
 const MoreSubMenu = styled.ul`
     width: 238px;
-    
+    border-radius: 6px;
 `;
 
 const MoreSubMenuItem = styled.li`
@@ -220,8 +232,14 @@ const MoreSubMenuItem = styled.li`
     align-items: center;
     justify-content: space-between;
     padding: 8px 16px;
-    background-color: transparent;
-    border: 1px solid #cccccc;
+    background-color: white;
+    border-top: 0.5px solid rgb(219, 219, 219);
+    &.first{
+        border: none;
+    }
+    &.account{
+        border-top: 6px solid rgb(239, 239, 239);
+    }
 `;
 
 
