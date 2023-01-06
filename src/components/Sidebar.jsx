@@ -61,7 +61,7 @@ const Sidebar = () => {
         };
     });
 
-    const MoreSubMenuFun = (a) => {
+    const MoreSubMenuFun = () => {
         return(
             <MoreSubMenuBox>
                 <MoreSubMenu>
@@ -113,7 +113,7 @@ const Sidebar = () => {
     }
 
     return(
-        <Nav ref={ref}>
+        <Nav>
             <div>
                 <div>
                     <LogoBox>
@@ -126,8 +126,11 @@ const Sidebar = () => {
                     {menu}
                 </MenuList>
             </div>
-            { open ? <MoreSubMenuFun/> : <></> }
+            <div ref={ref}>
+                { open ? <MoreSubMenuFun/> : <></> }
+            </div>
             <More 
+            ref={ref}
             className="cursor"
             onClick={()=>{
                 setOpen(!open);
