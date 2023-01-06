@@ -4,6 +4,7 @@ import styled from 'styled-components';
 // 컴포넌트 
 import GlobalStyle from '../components/GlobalStyle';
 import Sidebar from '../components/Sidebar'
+import MainPost from '../components/MainPost';
 
 const MainPage = () => {
     return(
@@ -12,7 +13,7 @@ const MainPage = () => {
             <Sidebar/>
             <Main>
                 <PostBox>
-                    메인 페이지 
+                    <MainPost/>
                 </PostBox>
             </Main>
         </Layout>
