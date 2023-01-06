@@ -12,18 +12,16 @@ import {
     AiOutlineHeart, 
     AiOutlinePlusSquare,
     AiOutlineMenu,
-    AiOutlineSetting,
-    AiOutlineFieldTime
 } from 'react-icons/ai';
-import { RxBookmark } from 'react-icons/rx'
-import { BiMessageAltError } from 'react-icons/bi'
 import { 
     HiOutlinePaperAirplane,
-    HiOutlineMoon,
 } from 'react-icons/hi';
 
 // 이미지
 import LogoImg from '../imgs/Logo.png'
+
+//컴포넌트
+import MoreSubMenuPopUp from './MoreSubMenuPopUp';
 
 const Sidebar = () => {
 
@@ -61,57 +59,6 @@ const Sidebar = () => {
         };
     });
 
-    const MoreSubMenuFun = () => {
-        return(
-            <MoreSubMenuBox>
-                <MoreSubMenu>
-                    <MoreSubMenuItem className="first">
-                        <MenuText className='set'>
-                            설정
-                        </MenuText>
-                        <AiOutlineSetting className='icon'/>
-                    </MoreSubMenuItem>
-                    <MoreSubMenuItem>
-                        <MenuText className='set'>
-                            저장됨
-                        </MenuText>
-                        <RxBookmark className='icon'/>
-                    </MoreSubMenuItem>
-                    <MoreSubMenuItem>
-                        <MenuText className='set'>
-                            모드 전환
-                        </MenuText>
-                        <HiOutlineMoon className='icon'/>
-                    </MoreSubMenuItem>
-                    <MoreSubMenuItem>
-                        <MenuText className='set'>
-                            내 활동
-                        </MenuText>
-                        <AiOutlineFieldTime className='icon'/>
-                    </MoreSubMenuItem>
-                    <MoreSubMenuItem>
-                        <MenuText className='set'>
-                            문제 신고
-                        </MenuText>
-                        <BiMessageAltError className='icon'/>
-                    </MoreSubMenuItem>
-                </MoreSubMenu>
-                <MoreSubMenu>
-                    <MoreSubMenuItem className='account'>
-                        <MenuText className='set'>
-                            계정 전환
-                        </MenuText>
-                    </MoreSubMenuItem>
-                    <MoreSubMenuItem>
-                        <MenuText className='set'>
-                            로그아웃
-                        </MenuText>
-                    </MoreSubMenuItem>
-                </MoreSubMenu>
-            </MoreSubMenuBox>
-        );
-    }
-
     return(
         <Nav>
             <div>
@@ -122,12 +69,12 @@ const Sidebar = () => {
                         </a>
                     </LogoBox>
                 </div>
-                <MenuList>
+                <ul>
                     {menu}
-                </MenuList>
+                </ul>
             </div>
             <div ref={ref}>
-                { open ? <MoreSubMenuFun/> : <></> }
+                { open ? <MoreSubMenuPopUp/> : <></> }
             </div>
             <More 
             ref={ref}
@@ -156,14 +103,14 @@ const Nav = styled.nav`
     background: #fff;
     .flexBox{
         display: flex;
-    }
+    };
     .cursor{
         cursor: pointer;
     };
     .icon{
-        width: 30px;
-        height: 30px;
-    }
+        width: 28px;
+        height: 28px;
+    };
 `;
 
 const LogoBox = styled.div`
@@ -181,20 +128,31 @@ const Logo = styled.div`
     margin-top: 7px;
 `;
 
-const MenuList = styled.ul`
-    
-`;
-
 const Menu = styled.li`
     display: flex;
     align-items: center;
     margin: 4px 0;
     padding: 12px;
     box-sizing: border-box;
-    &:active{
-        font-weight: bold;
-    }
+    &:hover{
+        background: rgba(216, 216, 216, 0.171);
+        border-radius: 25px;
+        .icon{
+            transition: transform ease-out .1s;
+            transform: scale(calc(15 / 14));
+        };
+    };
+    
 `;
+
+const More = styled.div`
+    margin: 4px 0;
+    padding: 12px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+`;
+
 
 const MenuText = styled.div`
     padding-left: 16px;
@@ -206,43 +164,6 @@ const MenuText = styled.div`
     &.set{
        padding-left: 0;
     };
-`;
-
-const More = styled.div`
-    margin: 4px 0;
-    padding: 12px;
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
-`;
-
-const MoreSubMenuBox = styled.div`
-    position: absolute;
-    left: 20px;
-    bottom: 80px;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0px 0px 20px rgba(0, 0, 0, .0975);
-`;
-
-const MoreSubMenu = styled.ul`
-    width: 238px;
-    border-radius: 6px;
-`;
-
-const MoreSubMenuItem = styled.li`
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 8px 16px;
-    background-color: white;
-    border-top: 0.5px solid rgb(219, 219, 219);
-    &.first{
-        border: none;
-    }
-    &.account{
-        border-top: 6px solid rgb(239, 239, 239);
-    }
 `;
 
 
