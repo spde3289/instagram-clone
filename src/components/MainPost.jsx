@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { CgProfile, CgMoreAlt } from 'react-icons/cg'
 
 const MainPost = () => {
 
@@ -9,10 +10,11 @@ const MainPost = () => {
                 <Post>
                     <PostHeader>
                         <Profile>
-                            프로필 사진
+                            <CgProfile className='icon'/>
+                            <div className='name'>사용자 1 </div>
                         </Profile>
                         <Option>    
-                            더보기 아이콘
+                            <CgMoreAlt className='icon'/>
                         </Option>
                     </PostHeader>  
                     <div>
@@ -37,19 +39,31 @@ const PostBox = styled.div`
 `;
 
 const Post = styled.div`
-    
+    display: flex;
+    flex-direction: column;
 `;
 
 const PostHeader = styled.div`
-    
+    display: flex;
+    justify-content: space-between;
 `;
 
 const Profile = styled.div`
+    display: flex;
+    .icon{
+        width: 32px;
+        height: 32px;
+    }
+    .name{
 
+    }
 `;
 
 const Option = styled.div`
-
+    .icon{
+        width: 24px;
+        height: 24px;
+    }
 `;
 
 const PostImg = styled.div`
