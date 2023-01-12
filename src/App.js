@@ -3,14 +3,14 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-//import LoginPage from './page/LoginPage';
-import MainPage from "./page/MainPage";
+import LoginPage from './page/LoginPage';
+//import MainPage from "./page/MainPage";
 import ErrorPage from "./error-page";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <MainPage/>,
+    element: <LoginPage/>,
     errorElement: <ErrorPage />,
   },
 ]);
