@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import GlobalStyle from '../components/GlobalStyle';
+// 컴포넌트
+import JoinPage from '../components/JoinPage';
 // 이미지
 import smartPhoneImg from '../imgs/smartphone.png';
 import LogoImg from '../imgs/Logo.png';
@@ -8,9 +10,11 @@ import imgs from '../imgs/imgs.png';
 import GLink from '../imgs/GLink.png';
 import MsLink from '../imgs/MsLink.png';
 
+
 const LoginPage = () => {
 
     const [IdOn, setIdOn] = useState(false);
+    const [onLogin, setOnLogin] = useState(false);
     const [PasswardOn, setPasswardOn] = useState(false);
     const input = useRef();
     const [currentImg, setCurrentImg] = useState([
@@ -74,6 +78,10 @@ const LoginPage = () => {
         input.current.focus();
     };
 
+    const PopUp = () => {
+        setOnLogin(!onLogin)
+    }
+
     return(
         <>
             <Main>  
@@ -134,9 +142,15 @@ const LoginPage = () => {
                                 </ForgotPassword>
                             </LoginBox>
                         </MainBox>
+
                         <SignUpBox>
+                        { onLogin ? <JoinPage onLogin={onLogin} PopUp={PopUp}/> : <></> }
                             <p className="text">
-                                계정이 없으신가요? <a href='/' className='link'>가입하기</a>
+                                계정이 없으신가요? 
+                                <span className='link'onClick={()=>{
+                                    setOnLogin(!onLogin);
+                                    console.log(onLogin)
+                                }} >가입하기</span>
                             </p>
                         </SignUpBox>
                         <DownLodeBox>
@@ -388,6 +402,7 @@ const ForgotPassword = styled.a`
 `;
 
 const SignUpBox = styled.div`
+    position: relative;
     background-color: #fff;
     width: 348px;
     height: 41px;
