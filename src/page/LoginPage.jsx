@@ -149,7 +149,6 @@ const LoginPage = () => {
                                 계정이 없으신가요? 
                                 <span className='link'onClick={()=>{
                                     setOnLogin(!onLogin);
-                                    console.log(onLogin)
                                 }} >가입하기</span>
                             </p>
                         </SignUpBox>
