@@ -276,10 +276,10 @@ const MainBox = styled.div`
 `;
 
 const Logo = styled.div`
-    background: url(${LogoImg}) no-repeat 0px -54px;
+    background: url(${LogoImg}) no-repeat 0px -52px;
     background-size: auto;
     width: 175px;
-    height: 51px;
+    height: 53px;
     margin: 36px 0 12px;
 `;
 
