@@ -1,13 +1,60 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import { MdOutlineCancel } from 'react-icons/md'
 
 const JoinPage = (props) => {
 
+    const [IdCheck, setIdCheck] = useState(false);
+    const [PassWordCheck, setPassWordCheck] = useState(false);
+    const [NameCheck, setNameCheck] = useState(false);
+    const [account, setAccount] = useState([{
+        id: 'instaram1',
+        password: 'instaram1',
+        name: 'user1',
+    },]);
+ 
     const handlePopUp = ()=>{
         props.PopUp();
     };
+
+    const AddUserInfo = (e) => {
+        const NewUser = {
+            id: e.target.id.value,
+            password: e.target.password.value,
+            name: e.target.name.value 
+            };
+        const user = [...account];
+        user.push(NewUser);
+        setAccount(user);
+    };
+
+    const onIdCheck = (e)=>{
+        const IdValue = account.findIndex(s=>(s.id === e.target.id.value));
+        if(IdValue === -1 && e.target.id.value !== ''){
+            setIdCheck(true);
+        }else{
+            setIdCheck(false);
+        };
+        console.log(IdCheck)
+    };
+
+    const onPasswordCheck = (e)=>{
+        if(e.target.password.value){
+            setPassWordCheck(true);
+        }else{
+            setPassWordCheck(false);
+        };
+    };
+
+    const onNameCheck = (e)=>{
+        if(e.target.name.value){
+            setNameCheck(true);
+        }else{
+            setNameCheck(false);
+        }
+    };
+
 
     return(
         <JoinBox>
@@ -16,16 +63,24 @@ const JoinPage = (props) => {
                 handlePopUp()
             }}/>
             <Title>회원가입</Title> 
-            <Join>
-                아이디<div>중복 검사</div>
-                <JoinInput/>
+            <Join onSubmit={(e)=>{
+                e.preventDefault();
+                console.log(account)
+                onIdCheck(e);
+                onPasswordCheck(e);
+                onNameCheck(e);
+                if(IdCheck && PassWordCheck && NameCheck) AddUserInfo(e);
+
+            }}>
+                아이디<input type='submit' name='check' value='중복확인' />
+                <JoinInput type='id' name='id' />
 
                 비밀번호
-                <JoinInput/>
+                <JoinInput type='password' name='password'/>
                 이름
-                <JoinInput/>
+                <JoinInput type='name' name='name'/>
 
-                <Submit>가입하기</Submit>
+                <Submit type='submit' name='submit' value='submit'/>
             </Join>
         </JoinBox>
     );
@@ -72,7 +127,7 @@ const JoinInput = styled.input`
     outline: none;
 `;
 
-const Submit = styled.button`
+const Submit = styled.input`
     height: 32px;
     border: none;
     background-color: rgb( 0,149,246);
