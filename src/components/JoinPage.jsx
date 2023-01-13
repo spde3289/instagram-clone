@@ -25,7 +25,7 @@ const JoinPage = (props) => {
                 이름
                 <JoinInput/>
 
-                <Summit>가입하기</Summit>
+                <Submit>가입하기</Submit>
             </Join>
         </JoinBox>
     );
@@ -72,7 +72,7 @@ const JoinInput = styled.input`
     outline: none;
 `;
 
-const Summit = styled.button`
+const Submit = styled.button`
     height: 32px;
     border: none;
     background-color: rgb( 0,149,246);
