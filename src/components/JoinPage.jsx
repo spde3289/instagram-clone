@@ -5,9 +5,10 @@ import { MdOutlineCancel } from 'react-icons/md'
 
 const JoinPage = (props) => {
 
-    const [IdCheck, setIdCheck] = useState(false);
-    const [PassWordCheck, setPassWordCheck] = useState(false);
-    const [NameCheck, setNameCheck] = useState(false);
+    const [Id, setId] = useState('');
+    const [Name, setName] = useState('');
+    const [Password, setPassword] = useState('');
+    const [passwordCheck,setPasswordCheck] = useState('');
     const [account, setAccount] = useState([{
         id: 'instaram1',
         password: 'instaram1',
@@ -18,41 +19,32 @@ const JoinPage = (props) => {
         props.PopUp();
     };
 
-    const AddUserInfo = (e) => {
+    const AddUserInfo = () => {
         const NewUser = {
-            id: e.target.id.value,
-            password: e.target.password.value,
-            name: e.target.name.value 
+            id: Id,
+            password: Password,
+            name: Name, 
             };
         const user = [...account];
         user.push(NewUser);
         setAccount(user);
+        console.log(user);
     };
 
-    const onIdCheck = (e)=>{
-        const IdValue = account.findIndex(s=>(s.id === e.target.id.value));
-        if(IdValue === -1 && e.target.id.value !== ''){
-            setIdCheck(true);
-        }else{
-            setIdCheck(false);
-        };
-        console.log(IdCheck)
+    const onChangeId = (e)=>{
+        setId(e.target.value)
     };
 
-    const onPasswordCheck = (e)=>{
-        if(e.target.password.value){
-            setPassWordCheck(true);
-        }else{
-            setPassWordCheck(false);
-        };
+    const onChangePassword = (e)=>{
+        setPassword(e.target.value)
     };
 
-    const onNameCheck = (e)=>{
-        if(e.target.name.value){
-            setNameCheck(true);
-        }else{
-            setNameCheck(false);
-        }
+    const onChangeName = (e)=>{
+        setName(e.target.value)
+    };
+
+    const onChangePasswordCheck = (e)=>{
+        setPasswordCheck(e.target.value)
     };
 
 
@@ -60,27 +52,49 @@ const JoinPage = (props) => {
         <JoinBox>
             <MdOutlineCancel className="icon" 
             onClick={()=>{
-                handlePopUp()
+                handlePopUp();
             }}/>
             <Title>회원가입</Title> 
             <Join onSubmit={(e)=>{
                 e.preventDefault();
-                console.log(account)
-                onIdCheck(e);
-                onPasswordCheck(e);
-                onNameCheck(e);
-                if(IdCheck && PassWordCheck && NameCheck) AddUserInfo(e);
+
+                if(Password !== passwordCheck){
+                    return alert('비밀번호와 비밀번호 확인이 같지 않습니다.');
+                };
+
+                console.log({
+                    Id,
+                    Name,
+                    Password,
+                    passwordCheck
+                });
+                AddUserInfo(e);
 
             }}>
-                아이디<input type='submit' name='check' value='중복확인' />
-                <JoinInput type='id' name='id' />
-
-                비밀번호
-                <JoinInput type='password' name='password'/>
+                아이디
+                <JoinInput type='id' name='id' 
+                onChange={(e)=>{
+                    onChangeId(e);
+                }}/>
+                {/* {  && <div className='alarm'>중복된 아이디 입니다.</div>} */}
                 이름
-                <JoinInput type='name' name='name'/>
-
-                <Submit type='submit' name='submit' value='submit'/>
+                <JoinInput type='name' name='name'
+                onChange={(e)=>{
+                    onChangeName(e);
+                }}/>
+                {/* {  && <div className='alarm'>빈칸입니다.</div>} */}
+                비밀번호
+                <JoinInput type='password' name='password'
+                onChange={(e)=>{
+                    onChangePassword(e);
+                }}/>
+                비밀번호 확인
+                <JoinInput type='password' name='password'
+                onChange={(e)=>{
+                    onChangePasswordCheck(e);
+                }}/>
+                {/* {  && <div className='alarm'>비밀번호가 일치하지 않습니다.</div>} */}
+                <Submit type='submit' name='submit' value='회원가입'/>
             </Join>
         </JoinBox>
     );
@@ -105,11 +119,13 @@ const JoinBox = styled.div`
     .text{
 
     };
+    .alarm{
+        color: red;
+    }
 `;
 
 const Title = styled.h2`
     font-weight: normal;
-
 `;
 
 const Join = styled.form`
@@ -122,7 +138,6 @@ const JoinInput = styled.input`
     border: 1px solid #cccccc;
     background: rgba(216,216,216,0.171);
     border-radius: 5px;
-    margin-bottom: 30px;
     padding: 9px 0 7px 8px;
     outline: none;
 `;
