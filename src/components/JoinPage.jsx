@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import { MdOutlineCancel } from 'react-icons/md'
@@ -14,8 +14,14 @@ const JoinPage = (props) => {
         password: 'instaram1',
         name: 'user1',
     },]);
- 
-    const handlePopUp = ()=>{
+    
+    useEffect(()=>{
+        console.log(account);
+        props.user(account);
+        handlePopUp();
+    },[account])
+
+    const handlePopUp = () => {
         props.PopUp();
     };
 
@@ -24,29 +30,42 @@ const JoinPage = (props) => {
             id: Id,
             password: Password,
             name: Name, 
-            };
+        };
         const user = [...account];
         user.push(NewUser);
         setAccount(user);
-        console.log(user);
+        
+        //props.PopUp();
     };
 
-    const onChangeId = (e)=>{
+    const onChangeId = (e) => {
         setId(e.target.value)
+        console.log(account)
     };
 
-    const onChangePassword = (e)=>{
+    const onChangePassword = (e) => {
         setPassword(e.target.value)
     };
 
-    const onChangeName = (e)=>{
+    const onChangeName = (e) => {
         setName(e.target.value)
     };
 
-    const onChangePasswordCheck = (e)=>{
+    const onChangePasswordCheck = (e) => {
         setPasswordCheck(e.target.value)
     };
 
+    const onSubmit = (e) => {
+        const idOverlap = account.findIndex(user=>(user.id === e.target.id.value))
+        if(idOverlap !== -1){
+            return alert('중복된 아이디입니다.');
+        }
+        if(Password !== passwordCheck){
+            return alert('비밀번호와 비밀번호 확인이 같지 않습니다.');
+        };
+        AddUserInfo(e);
+
+    };
 
     return(
         <JoinBox>
@@ -57,44 +76,39 @@ const JoinPage = (props) => {
             <Title>회원가입</Title> 
             <Join onSubmit={(e)=>{
                 e.preventDefault();
-
-                if(Password !== passwordCheck){
-                    return alert('비밀번호와 비밀번호 확인이 같지 않습니다.');
-                };
-
-                console.log({
-                    Id,
-                    Name,
-                    Password,
-                    passwordCheck
-                });
-                AddUserInfo(e);
-
+                onSubmit(e);
             }}>
-                아이디
-                <JoinInput type='id' name='id' 
-                onChange={(e)=>{
-                    onChangeId(e);
-                }}/>
-                {/* {  && <div className='alarm'>중복된 아이디 입니다.</div>} */}
-                이름
-                <JoinInput type='name' name='name'
-                onChange={(e)=>{
-                    onChangeName(e);
-                }}/>
-                {/* {  && <div className='alarm'>빈칸입니다.</div>} */}
-                비밀번호
-                <JoinInput type='password' name='password'
-                onChange={(e)=>{
-                    onChangePassword(e);
-                }}/>
-                비밀번호 확인
-                <JoinInput type='password' name='password'
-                onChange={(e)=>{
-                    onChangePasswordCheck(e);
-                }}/>
-                {/* {  && <div className='alarm'>비밀번호가 일치하지 않습니다.</div>} */}
-                <Submit type='submit' name='submit' value='회원가입'/>
+                <div className='flexBox'>
+                    아이디
+                    <JoinInput type='id' name='id' 
+                    onChange={(e)=>{
+                        onChangeId(e);
+                    }}/>
+                </div>
+                <div className='flexBox'>
+                    이름
+                    <JoinInput type='name' name='name'
+                    onChange={(e)=>{
+                        onChangeName(e);
+                    }}/>
+                </div>
+                <div className='flexBox'>
+                    비밀번호
+                    <JoinInput type='password' name='password'
+                    onChange={(e)=>{
+                        onChangePassword(e);
+                    }}/>
+                </div>
+                <div className='flexBox'>
+                    비밀번호 확인
+                    <JoinInput type='password' name='password'
+                    onChange={(e)=>{
+                        onChangePasswordCheck(e);
+                    }}/>
+                </div>
+                <div className='flexBox'>
+                    <Submit type='submit' name='submit' value='회원가입'/>
+                </div>
             </Join>
         </JoinBox>
     );
@@ -121,7 +135,7 @@ const JoinBox = styled.div`
     };
     .alarm{
         color: red;
-    }
+    };
 `;
 
 const Title = styled.h2`
@@ -132,6 +146,11 @@ const Join = styled.form`
     display: flex;
     flex-direction: column;
     margin: 20px 15px;
+    .flexBox{
+        display: flex;
+        flex-direction: column;
+        padding-bottom: 23px;
+    };
 `;
 
 const JoinInput = styled.input`
