@@ -16,14 +16,20 @@ const LoginPage = () => {
     const [IdOn, setIdOn] = useState(false);
     const [onLogin, setOnLogin] = useState(false);
     const [PasswardOn, setPasswardOn] = useState(false);
-    const input = useRef();
+    const [userInfo, setUserInfo] = useState();
     const [currentImg, setCurrentImg] = useState([
         { key:1, current:1, class:'img1', src:require("../imgs/screenshot1.png") },
         { key:2, current:0, class:'img2', src:require("../imgs/screenshot2.png")},
         { key:3, current:0, class:'img3', src:require("../imgs/screenshot3.png")},
         { key:4, current:0, class:'img4', src:require("../imgs/screenshot4.png")}
     ]);
-
+    const [account, setAccount] = useState([{
+        id: 'instaram1',
+        password: 'instaram1',
+        name: 'user1',
+    },]);
+    const input = useRef();
+    
     const wallPaper = [...currentImg].map(img=>(
         <Wallpapers
             key={img.key}
@@ -81,6 +87,11 @@ const LoginPage = () => {
     const PopUp = () => {
         setOnLogin(!onLogin)
     }
+
+    const user = (e) => {
+        setUserInfo(e)
+        console.log(userInfo)
+    };
 
     return(
         <>
@@ -142,9 +153,8 @@ const LoginPage = () => {
                                 </ForgotPassword>
                             </LoginBox>
                         </MainBox>
-
                         <SignUpBox>
-                        { onLogin ? <JoinPage onLogin={onLogin} PopUp={PopUp}/> : <></> }
+                        { onLogin ? <JoinPage onLogin={onLogin} PopUp={PopUp} user={user}/> : <></> }
                             <p className="text">
                                 계정이 없으신가요? 
                                 <span className='link'onClick={()=>{
