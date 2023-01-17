@@ -16,7 +16,7 @@ const LoginPage = () => {
     const [IdOn, setIdOn] = useState(false);
     const [onLogin, setOnLogin] = useState(false);
     const [PasswardOn, setPasswardOn] = useState(false);
-    const [userInfo, setUserInfo] = useState();
+
     const [currentImg, setCurrentImg] = useState([
         { key:1, current:1, class:'img1', src:require("../imgs/screenshot1.png") },
         { key:2, current:0, class:'img2', src:require("../imgs/screenshot2.png")},
@@ -28,6 +28,7 @@ const LoginPage = () => {
         password: 'instaram1',
         name: 'user1',
     },]);
+
     const input = useRef();
     
     const wallPaper = [...currentImg].map(img=>(
@@ -89,8 +90,8 @@ const LoginPage = () => {
     }
 
     const user = (e) => {
-        setUserInfo(e)
-        console.log(userInfo)
+        setAccount(e)
+        console.log(account)
     };
 
     return(
@@ -134,7 +135,10 @@ const LoginPage = () => {
                                         addPasswardClass(e);
                                     }} />
                                 </A>
-                                <LoginButton>
+                                <LoginButton onClick={e=>{
+                                    e.preventDefault();
+                                    console.log(account);
+                                }}>
                                     <div>
                                         로그인
                                     </div>
@@ -154,7 +158,7 @@ const LoginPage = () => {
                             </LoginBox>
                         </MainBox>
                         <SignUpBox>
-                        { onLogin ? <JoinPage onLogin={onLogin} PopUp={PopUp} user={user}/> : <></> }
+                        { onLogin ? <JoinPage onLogin={onLogin} PopUp={PopUp} account={account} user={user}/> : <></> }
                             <p className="text">
                                 계정이 없으신가요? 
                                 <span className='link'onClick={()=>{
