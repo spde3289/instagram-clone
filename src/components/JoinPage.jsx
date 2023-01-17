@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-
+// 아이콘
 import { MdOutlineCancel } from 'react-icons/md'
 
 const JoinPage = (props) => {
@@ -9,38 +9,29 @@ const JoinPage = (props) => {
     const [Name, setName] = useState('');
     const [Password, setPassword] = useState('');
     const [passwordCheck,setPasswordCheck] = useState('');
-    const [account, setAccount] = useState([{
-        id: 'instaram1',
-        password: 'instaram1',
-        name: 'user1',
-    },]);
-    
-    useEffect(()=>{
-        console.log(account);
-        props.user(account);
-        handlePopUp();
-    },[account])
-
+    const [userInfo, setUserInfo] = useState([]);
+    const account = props.account;
+ 
     const handlePopUp = () => {
         props.PopUp();
     };
 
     const AddUserInfo = () => {
+        const user = [...account];
         const NewUser = {
             id: Id,
             password: Password,
             name: Name, 
         };
-        const user = [...account];
+        console.log(user)
         user.push(NewUser);
-        setAccount(user);
-        
-        //props.PopUp();
+        setUserInfo(user);
+        console.log(userInfo);
+        props.user(account);
     };
 
     const onChangeId = (e) => {
-        setId(e.target.value)
-        console.log(account)
+        setId(e.target.value);
     };
 
     const onChangePassword = (e) => {
@@ -56,15 +47,15 @@ const JoinPage = (props) => {
     };
 
     const onSubmit = (e) => {
-        const idOverlap = account.findIndex(user=>(user.id === e.target.id.value))
+        const idOverlap = userInfo.findIndex(user=>(user.id === e.target.id.value))
         if(idOverlap !== -1){
             return alert('중복된 아이디입니다.');
         }
         if(Password !== passwordCheck){
             return alert('비밀번호와 비밀번호 확인이 같지 않습니다.');
         };
+        console.log(account)
         AddUserInfo(e);
-
     };
 
     return(
