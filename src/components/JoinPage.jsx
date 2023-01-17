@@ -3,6 +3,7 @@ import styled from 'styled-components';
 // 아이콘
 import { MdOutlineCancel } from 'react-icons/md'
 
+
 const JoinPage = (props) => {
 
     const [Id, setId] = useState('');
