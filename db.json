@@ -1,5 +1,19 @@
 {
   "account": [
-    { "id": "Instargram1", "password": "Instargram1", "name": "Instargram1" }
+    {
+      "id": "Instargram1",
+      "password": "Instargram1",
+      "name": "Instargram1"
+    },
+    {
+      "id": "Instargram2",
+      "password": "Instargram2",
+      "name": "Instargram2"
+    },
+    {
+      "id": "Instargram3",
+      "password": "Instargram2",
+      "name": "Instargram2"
+    }
   ]
 }
