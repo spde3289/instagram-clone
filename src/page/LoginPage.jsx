@@ -39,8 +39,24 @@ const LoginPage = () => {
           const asd = {"id": "Instargram3", "password": "Instargram24", "name": "Instargram"}
 
           async function postUser() {
+            axios({
+                method:"POST",
+                url: 'https://json-server-vercel-mauve.vercel.app/account',
+                data:{
+                    "email": "asdasdasdad",
+                    "password": "password.value"
+                }
+            }).then((res)=>{
+                console.log(res);
+            }).catch(error=>{
+                console.log(error);
+                throw new Error(error);
+            });
+          }
+
+          async function deleteUser() {
             try {
-              const response = await axios.post("https://json-server-vercel-mauve.vercel.app/account", JSON.stringify(asd));
+              const response = await axios.delete("https://json-server-vercel-mauve.vercel.app/account", JSON.stringify(asd));
               console.log(response.data);
             } catch (error) {
               console.error(error);
@@ -111,6 +127,7 @@ const LoginPage = () => {
         <>
             <Box onClick={()=>{getUser() }}>겟</Box>
             <Box onClick={()=>{postUser()}}>포스트</Box>
+            <Box onClick={()=>{deleteUser()}}>딜리트</Box>
 
             <Main>  
                 <Article>

@@ -58,6 +58,7 @@ const JoinPage = (props) => {
         console.log(account)
         AddUserInfo(e);
     };
+    
 
     return(
         <JoinBox>
