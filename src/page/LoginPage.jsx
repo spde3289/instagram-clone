@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
+import axios from "axios";
 import GlobalStyle from '../components/GlobalStyle';
 // 컴포넌트
 import JoinPage from '../components/JoinPage';
@@ -23,11 +24,28 @@ const LoginPage = () => {
         { key:3, current:0, class:'img3', src:require("../imgs/screenshot3.png")},
         { key:4, current:0, class:'img4', src:require("../imgs/screenshot4.png")}
     ]);
-    const [account, setAccount] = useState([{
-        id: 'instaram1',
-        password: 'instaram1',
-        name: 'user1',
-    },]);
+
+
+
+        async function getUser() {
+            try {
+              const response = await axios.get('https://json-server-vercel-mauve.vercel.app/account');
+              console.log(response.data);
+            } catch (error) {
+              console.error(error);
+            }
+          }
+
+          const asd = {"id": "Instargram3", "password": "Instargram24", "name": "Instargram"}
+
+          async function postUser() {
+            try {
+              const response = await axios.post("https://json-server-vercel-mauve.vercel.app/account", JSON.stringify(asd));
+              console.log(response.data);
+            } catch (error) {
+              console.error(error);
+            }
+          }
 
     const input = useRef();
     
@@ -89,13 +107,11 @@ const LoginPage = () => {
         setOnLogin(!onLogin)
     }
 
-    const user = (e) => {
-        setAccount(e)
-        console.log(account)
-    };
-
     return(
         <>
+            <Box onClick={()=>{getUser() }}>겟</Box>
+            <Box onClick={()=>{postUser()}}>포스트</Box>
+
             <Main>  
                 <Article>
                     <GlobalStyle/>
@@ -137,7 +153,6 @@ const LoginPage = () => {
                                 </A>
                                 <LoginButton onClick={e=>{
                                     e.preventDefault();
-                                    console.log(account);
                                 }}>
                                     <div>
                                         로그인
@@ -158,7 +173,7 @@ const LoginPage = () => {
                             </LoginBox>
                         </MainBox>
                         <SignUpBox>
-                        { onLogin ? <JoinPage onLogin={onLogin} PopUp={PopUp} account={account} user={user}/> : <></> }
+                        { onLogin ? <JoinPage onLogin={onLogin} PopUp={PopUp}/> : <></> }
                             <p className="text">
                                 계정이 없으신가요? 
                                 <span className='link'onClick={()=>{
@@ -225,6 +240,13 @@ const LoginPage = () => {
         </>
     );
 };
+
+const Box = styled.div`
+    width: 100px;
+    height: 100px;
+    background: #fff;
+    border: 1px solid #000;
+`;
 
 const Main = styled.main`
     box-sizing: border-box;
