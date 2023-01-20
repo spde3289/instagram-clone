@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import axios from "axios";
 import GlobalStyle from '../components/GlobalStyle';
 // 컴포넌트
 import JoinPage from '../components/JoinPage';
@@ -24,44 +23,6 @@ const LoginPage = () => {
         { key:3, current:0, class:'img3', src:require("../imgs/screenshot3.png")},
         { key:4, current:0, class:'img4', src:require("../imgs/screenshot4.png")}
     ]);
-
-
-
-        async function getUser() {
-            try {
-              const response = await axios.get('https://json-server-vercel-mauve.vercel.app/account');
-              console.log(response.data);
-            } catch (error) {
-              console.error(error);
-            }
-          }
-
-          const asd = {"id": "Instargram3", "password": "Instargram24", "name": "Instargram"}
-
-          async function postUser() {
-            axios({
-                method:"POST",
-                url: 'https://json-server-vercel-mauve.vercel.app/account',
-                data:{
-                    "email": "asdasdasdad",
-                    "password": "password.value"
-                }
-            }).then((res)=>{
-                console.log(res);
-            }).catch(error=>{
-                console.log(error);
-                throw new Error(error);
-            });
-          }
-
-          async function deleteUser() {
-            try {
-              const response = await axios.delete("https://json-server-vercel-mauve.vercel.app/account", JSON.stringify(asd));
-              console.log(response.data);
-            } catch (error) {
-              console.error(error);
-            }
-          }
 
     const input = useRef();
     
@@ -125,10 +86,6 @@ const LoginPage = () => {
 
     return(
         <>
-            <Box onClick={()=>{getUser() }}>겟</Box>
-            <Box onClick={()=>{postUser()}}>포스트</Box>
-            <Box onClick={()=>{deleteUser()}}>딜리트</Box>
-
             <Main>  
                 <Article>
                     <GlobalStyle/>
@@ -257,13 +214,6 @@ const LoginPage = () => {
         </>
     );
 };
-
-const Box = styled.div`
-    width: 100px;
-    height: 100px;
-    background: #fff;
-    border: 1px solid #000;
-`;
 
 const Main = styled.main`
     box-sizing: border-box;
