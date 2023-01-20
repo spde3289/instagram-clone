@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import axios from "axios";
 // 아이콘
 import { MdOutlineCancel } from 'react-icons/md'
 
@@ -10,25 +11,43 @@ const JoinPage = (props) => {
     const [Name, setName] = useState('');
     const [Password, setPassword] = useState('');
     const [passwordCheck,setPasswordCheck] = useState('');
-    const [userInfo, setUserInfo] = useState([]);
-    const account = props.account;
- 
+    const [account, setAccount] = useState({});
+    console.log(account)
+
     const handlePopUp = () => {
         props.PopUp();
     };
 
-    const AddUserInfo = () => {
-        const user = [...account];
-        const NewUser = {
-            id: Id,
-            password: Password,
-            name: Name, 
+    async function getUser() {
+        try {
+            const response = await axios.get('http://localhost:3001/account');
+            console.log(response.data);
+            setAccount(response.data)
+        } catch (error) {
+            console.error(error);
         };
-        console.log(user)
-        user.push(NewUser);
-        setUserInfo(user);
-        console.log(userInfo);
-        props.user(account);
+      };
+
+      async function postUser() {
+        axios({
+            method:"POST",
+            url: 'http://localhost:3001/account',
+            data:{
+                "id" : Id,
+                "password": Password,
+                "name": Name
+            }
+        }).then((res)=>{
+            console.log(res);
+        }).catch(error=>{
+            console.log(error);
+            throw new Error(error);
+        });
+      };
+
+    const AddUserInfo = () => {
+        postUser();
+        handlePopUp();
     };
 
     const onChangeId = (e) => {
@@ -48,14 +67,14 @@ const JoinPage = (props) => {
     };
 
     const onSubmit = (e) => {
-        const idOverlap = userInfo.findIndex(user=>(user.id === e.target.id.value))
+        getUser();
+        const idOverlap = account.findIndex(user=>(user.id === e.target.id.value))
         if(idOverlap !== -1){
             return alert('중복된 아이디입니다.');
         }
         if(Password !== passwordCheck){
             return alert('비밀번호와 비밀번호 확인이 같지 않습니다.');
         };
-        console.log(account)
         AddUserInfo(e);
     };
     
