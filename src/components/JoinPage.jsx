@@ -12,7 +12,6 @@ const JoinPage = (props) => {
     const [Password, setPassword] = useState('');
     const [passwordCheck,setPasswordCheck] = useState('');
     const [account, setAccount] = useState({});
-    console.log(account)
 
     const handlePopUp = () => {
         props.PopUp();
@@ -27,6 +26,10 @@ const JoinPage = (props) => {
             console.error(error);
         };
       };
+
+      useEffect(()=>{
+        getUser()
+      },[])
 
       async function postUser() {
         axios({
@@ -67,7 +70,7 @@ const JoinPage = (props) => {
     };
 
     const onSubmit = (e) => {
-        getUser();
+        getUser()
         const idOverlap = account.findIndex(user=>(user.id === e.target.id.value))
         if(idOverlap !== -1){
             return alert('중복된 아이디입니다.');
