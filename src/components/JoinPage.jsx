@@ -25,13 +25,13 @@ const JoinPage = (props) => {
         } catch (error) {
             console.error(error);
         };
-      };
+    };
 
-      useEffect(()=>{
+    useEffect(()=>{
         getUser()
-      },[])
+    },[])
 
-      async function postUser() {
+    async function postUser() {
         axios({
             method:"POST",
             url: 'http://localhost:3001/account',
@@ -81,7 +81,6 @@ const JoinPage = (props) => {
         AddUserInfo(e);
     };
     
-
     return(
         <JoinBox>
             <MdOutlineCancel className="icon" 
@@ -109,14 +108,14 @@ const JoinPage = (props) => {
                 </div>
                 <div className='flexBox'>
                     비밀번호
-                    <JoinInput type='password' name='password'
+                    <JoinInput type='password' name='password' autoComplete="on"
                     onChange={(e)=>{
                         onChangePassword(e);
                     }}/>
                 </div>
                 <div className='flexBox'>
                     비밀번호 확인
-                    <JoinInput type='password' name='password'
+                    <JoinInput type='password' name='password' autoComplete="on"
                     onChange={(e)=>{
                         onChangePasswordCheck(e);
                     }}/>
