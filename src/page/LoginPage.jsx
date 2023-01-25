@@ -1,11 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
-import GlobalStyle from '../components/GlobalStyle';
 import axios from "axios";
+import { useNavigate } from 'react-router';
 // 컴포넌트
+import GlobalStyle from '../components/GlobalStyle';
 import JoinPage from '../components/JoinPage';
+import ImgSlider from '../components/ImgSlide';
 // 이미지
-import smartPhoneImg from '../imgs/smartphone.png';
 import LogoImg from '../imgs/Logo.png';
 import imgs from '../imgs/imgs.png';
 import GLink from '../imgs/GLink.png';
@@ -19,12 +20,6 @@ const LoginPage = () => {
     const [PasswordOn, setPasswordOn] = useState(false);
     const [id, setId] = useState('');
     const [password, setPassword] = useState('');
-    const [currentImg, setCurrentImg] = useState([
-        { key:1, current:1, class:'img1', src:require("../imgs/screenshot1.png") },
-        { key:2, current:0, class:'img2', src:require("../imgs/screenshot2.png")},
-        { key:3, current:0, class:'img3', src:require("../imgs/screenshot3.png")},
-        { key:4, current:0, class:'img4', src:require("../imgs/screenshot4.png")}
-    ]);
     const [users, setUsers] = useState();
     const input = useRef();
 
@@ -38,46 +33,10 @@ const LoginPage = () => {
         };
     };
     console.log(users)
-    useEffect(()=>{
-        getUser()
-    },[])
 
-    const wallPaper = [...currentImg].map(img=>(
-        <Wallpapers
-        key={img.key}
-        className={img.class + (!img.current ? " hidden" : "")}
-        src={img.src}
-        ></Wallpapers>
-    ));
-        
-    const imgHandler = (type) => {
-        let currentIndex = currentImg.findIndex(img => img.current === 1);
-        let updateIndex = type === 'prev'
-        ? currentIndex -1
-        : currentIndex + 1
-        
-        if(updateIndex === currentImg.length ){
-            updateIndex = 0 
-        }else if(updateIndex === -1)(
-        updateIndex = currentImg.length -1
-        );
-        
-        setCurrentImg([...currentImg].map((img, index)=>{
-            return {
-                key : img.key,
-                current: index === updateIndex ? 1 : 0, 
-                class: img.class,
-                src : img.src
-            };
-        }));
-    };
-
-    useEffect(()=>{
-        const slide =  setInterval(()=>{imgHandler('next')}, 4500);
-        return () => clearInterval(slide);
-    });
 
     const addIdClass = (e) => {
+        getUser();
         console.log(id,password)
         setIdOn(true)
         setId(e.target.value)
@@ -107,19 +66,15 @@ const LoginPage = () => {
             (users) => users.id === id && users.password === password
           );
           if (user === undefined) throw new Error();
-        return user;
+        console.log(user)
     }
-
+  
     return(
         <>
             <Main>  
                 <Article>
                     <GlobalStyle/>
-                    <SmartPhone>
-                        <div className='imgs'>
-                            {wallPaper}
-                        </div>
-                    </SmartPhone>
+                    <ImgSlider/>
                     <div className="Ass">
                         <MainBox>
                             <Logo>
@@ -258,35 +213,6 @@ const Article = styled.article`
     align-items: center;
     margin-top: 32px;
     padding-bottom: 32px;
-`;
-
-const SmartPhone = styled.div`
-    width: 380.312px;
-    height: 581.15px;
-    background: url(${smartPhoneImg}) no-repeat -46px 0px;
-    margin-right: 32px;
-    margin-bottom: 12px;
-`;
-
-const Wallpapers = styled.img.attrs({alt:'배경화면 이미지'})`
-    position: relative;
-    left: 110px;
-    transition: opacity .9s linear;
-    &.img1{
-        top:27px;
-    };
-    &.img2{
-        top:-519px;
-    };
-    &.img3{
-        top:-1063px;
-    };
-    &.img4{
-        top:-1609px;
-    };
-    &.hidden{
-        opacity: 0;
-    };
 `;
 
 const MainBox = styled.div`
