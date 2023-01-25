@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import GlobalStyle from '../components/GlobalStyle';
+import axios from "axios";
 // 컴포넌트
 import JoinPage from '../components/JoinPage';
 // 이미지
@@ -15,35 +16,50 @@ const LoginPage = () => {
 
     const [IdOn, setIdOn] = useState(false);
     const [onLogin, setOnLogin] = useState(false);
-    const [PasswardOn, setPasswardOn] = useState(false);
-
+    const [PasswordOn, setPasswordOn] = useState(false);
+    const [id, setId] = useState('');
+    const [password, setPassword] = useState('');
     const [currentImg, setCurrentImg] = useState([
         { key:1, current:1, class:'img1', src:require("../imgs/screenshot1.png") },
         { key:2, current:0, class:'img2', src:require("../imgs/screenshot2.png")},
         { key:3, current:0, class:'img3', src:require("../imgs/screenshot3.png")},
         { key:4, current:0, class:'img4', src:require("../imgs/screenshot4.png")}
     ]);
-
+    const [users, setUsers] = useState();
     const input = useRef();
-    
+
+    async function getUser() {
+        try {
+            const response = await axios.get('http://localhost:3001/account');
+            console.log(response.data);
+            setUsers(response.data)
+        } catch (error) {
+            console.error(error);
+        };
+    };
+    console.log(users)
+    useEffect(()=>{
+        getUser()
+    },[])
+
     const wallPaper = [...currentImg].map(img=>(
         <Wallpapers
-            key={img.key}
-            className={img.class + (!img.current ? " hidden" : "")}
-            src={img.src}
+        key={img.key}
+        className={img.class + (!img.current ? " hidden" : "")}
+        src={img.src}
         ></Wallpapers>
     ));
-    
+        
     const imgHandler = (type) => {
         let currentIndex = currentImg.findIndex(img => img.current === 1);
         let updateIndex = type === 'prev'
         ? currentIndex -1
         : currentIndex + 1
-
+        
         if(updateIndex === currentImg.length ){
             updateIndex = 0 
         }else if(updateIndex === -1)(
-            updateIndex = currentImg.length -1
+        updateIndex = currentImg.length -1
         );
         
         setCurrentImg([...currentImg].map((img, index)=>{
@@ -55,24 +71,26 @@ const LoginPage = () => {
             };
         }));
     };
+
     useEffect(()=>{
-        if(true){
-        const slide =  setInterval(()=>{imgHandler('next')}, 4500)
-        return () => {clearInterval(slide)}
-        };
+        const slide =  setInterval(()=>{imgHandler('next')}, 4500);
+        return () => clearInterval(slide);
     });
 
     const addIdClass = (e) => {
+        console.log(id,password)
         setIdOn(true)
+        setId(e.target.value)
         if(e.target.value.length === 0){
             setIdOn(false)
-        }
+        };
     };
 
     const addPasswardClass = (e) => {
-        setPasswardOn(true)
+        setPasswordOn(true)
+        setPassword(e.target.value)
         if(e.target.value.length === 0){
-            setPasswardOn(false)
+            setPasswordOn(false)
         }
     };
 
@@ -82,6 +100,14 @@ const LoginPage = () => {
 
     const PopUp = () => {
         setOnLogin(!onLogin)
+    }
+
+    const signIn = () => {
+        const user = users.find(
+            (users) => users.id === id && users.password === password
+          );
+          if (user === undefined) throw new Error();
+        return user;
     }
 
     return(
@@ -99,7 +125,10 @@ const LoginPage = () => {
                             <Logo>
                                 <div></div>
                             </Logo>
-                            <LoginBox>
+                            <LoginBox onSubmit={(e)=>{
+                                e.preventDefault();
+                                signIn()
+                            }}>
                                 <A>
                                     <PlaceHolder className={ IdOn ? 'Idtarget' : ''}
                                     onClick={()=>{inputOnClick()}}>
@@ -114,24 +143,20 @@ const LoginPage = () => {
                                     }}/>
                                 </A>
                                 <A>
-                                    <PlaceHolder className={ PasswardOn ? 'target' : ''}>
+                                    <PlaceHolder className={ PasswordOn ? 'target' : ''}>
                                         비밀번호
                                     </PlaceHolder>
-                                    <LoginInputBox className={ PasswardOn ? 'target' : '' } 
+                                    <LoginInputBox className={ PasswordOn ? 'target' : '' } 
                                     aria-label='비밀번호' 
                                     aria-required='true'
                                     type='password'
+                                    name='password'
+                                    autoComplete="on"
                                     onChange={e=>{
                                         addPasswardClass(e);
                                     }} />
                                 </A>
-                                <LoginButton onClick={e=>{
-                                    e.preventDefault();
-                                }}>
-                                    <div>
-                                        로그인
-                                    </div>
-                                </LoginButton>
+                                <LoginButton type='submit' name='submit' value='로그인'/>
                                 <Or>
                                     또는
                                 </Or>
@@ -340,7 +365,7 @@ const PlaceHolder = styled.span`
     };
 `;
 
-const LoginButton = styled.button`
+const LoginButton = styled.input`
     width: 268px;
     height: 32px;
     margin: 8px 40px;
