@@ -1,21 +1,28 @@
 import React from "react";
 import styled from "styled-components";
+import { useNavigate } from 'react-router';
 //
 import { 
     AiOutlineSetting,
     AiOutlineFieldTime
 } from 'react-icons/ai';
-import { RxBookmark } from 'react-icons/rx'
-import { BiMessageAltError } from 'react-icons/bi'
+import { RxBookmark } from 'react-icons/rx';
+import { BiMessageAltError } from 'react-icons/bi';
 import { HiOutlineMoon } from 'react-icons/hi';
 
-
-
 const MoreSubMenuPopUp = () => {
+
+    const navigate = useNavigate();
+
+    const onClickHandler = () => {
+        console.log('a');
+        navigate('/');
+    };
+
     return(
         <MoreSubMenuBox>
             <MoreSubMenu>
-                <MoreSubMenuItem className="first">
+                <MoreSubMenuItem className="first" >
                     <MenuText className='set'>
                         설정
                     </MenuText>
@@ -52,7 +59,9 @@ const MoreSubMenuPopUp = () => {
                         계정 전환
                     </MenuText>
                 </MoreSubMenuItem>
-                <MoreSubMenuItem>
+                <MoreSubMenuItem onClick={()=>{
+                    onClickHandler();
+                    }}>
                     <MenuText className='set'>
                         로그아웃
                     </MenuText>
@@ -103,7 +112,7 @@ const MoreSubMenuItem = styled.li`
     };
     &:hover{
         background: rgb(239, 239, 239);
-    }
+    };
 `;
 
 

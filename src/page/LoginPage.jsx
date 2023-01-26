@@ -12,7 +12,6 @@ import imgs from '../imgs/imgs.png';
 import GLink from '../imgs/GLink.png';
 import MsLink from '../imgs/MsLink.png';
 
-
 const LoginPage = () => {
 
     const [IdOn, setIdOn] = useState(false);

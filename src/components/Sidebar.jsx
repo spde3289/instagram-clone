@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { 
     MdHomeFilled, 
     MdOutlineSlowMotionVideo 
-} from 'react-icons/md' ;  
+} from 'react-icons/md';  
 import { 
     AiOutlineSearch, 
     AiOutlineCompass, 
@@ -18,15 +18,15 @@ import {
 } from 'react-icons/hi';
 
 // 이미지
-import LogoImg from '../imgs/Logo.png'
+import LogoImg from '../imgs/Logo.png';
 
 //컴포넌트
 import MoreSubMenuPopUp from './MoreSubMenuPopUp';
 
 const Sidebar = () => {
 
-    const [open, setOpen] = useState(false)
-    const ref = useRef()
+    const [open, setOpen] = useState(false);
+    const ref = useRef();
     const menuList = [
         {key: 1, text: '홈', icon: <MdHomeFilled className="icon"/> },
         {key: 2, text: '검색', icon: <AiOutlineSearch className="icon"/> },
@@ -46,9 +46,6 @@ const Sidebar = () => {
     ));
 
     const handleClickOutSide = (e) => {
-        console.log(ref.current.contains(e.target));
-        console.log(ref.current);
-        console.log(e.target)
         if (open && !ref.current.contains(e.target)) {
           setOpen(false);
         };
@@ -76,20 +73,20 @@ const Sidebar = () => {
                 </ul>
             </div>
             <div ref={ref}>
-                { open ? <MoreSubMenuPopUp/> : <></> }
+                <div ref={ref}>
+                    { open ? <MoreSubMenuPopUp/> : <></> }
+                </div>
+                <More 
+                className="cursor"
+                onClick={()=>{
+                    setOpen(!open);
+                }}>
+                    <AiOutlineMenu className="icon" />
+                    <MenuText className="more">
+                        더보기
+                    </MenuText>
+                </More>
             </div>
-            <More 
-            ref={ref}
-            className="cursor"
-            onClick={()=>{
-                setOpen(!open);
-            }}>
-                <AiOutlineMenu className="icon" />
-                <MenuText className="more">
-                    더보기
-                </MenuText>
-
-            </More>
         </Nav>
     );
 };
@@ -155,7 +152,6 @@ const More = styled.div`
     align-items: center;
 `;
 
-
 const MenuText = styled.div`
     padding-left: 16px;
     font-size: 16px;
@@ -167,6 +163,5 @@ const MenuText = styled.div`
        padding-left: 0;
     };
 `;
-
 
 export default Sidebar;

@@ -1,12 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
-
+import { useLocation } from 'react-router';
 // 컴포넌트 
 import GlobalStyle from '../components/GlobalStyle';
 import Sidebar from '../components/Sidebar'
 import PostBox from '../components/PostBox';
 
 const MainPage = () => {
+    const location = useLocation();
+    console.log(location)
     return(
         <Layout>
             <GlobalStyle/>
