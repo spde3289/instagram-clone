@@ -22,35 +22,32 @@ const LoginPage = () => {
     const [password, setPassword] = useState('');
     const [users, setUsers] = useState();
     const input = useRef();
-
+    const navigate = useNavigate();
+    
     async function getUser() {
         try {
             const response = await axios.get('http://localhost:3001/account');
-            console.log(response.data);
-            setUsers(response.data)
+            setUsers(response.data);
         } catch (error) {
             console.error(error);
         };
     };
-    console.log(users)
-
 
     const addIdClass = (e) => {
         getUser();
-        console.log(id,password)
-        setIdOn(true)
-        setId(e.target.value)
+        setIdOn(true);
+        setId(e.target.value);
         if(e.target.value.length === 0){
-            setIdOn(false)
+            setIdOn(false);
         };
     };
 
     const addPasswardClass = (e) => {
-        setPasswordOn(true)
-        setPassword(e.target.value)
+        setPasswordOn(true);
+        setPassword(e.target.value);
         if(e.target.value.length === 0){
-            setPasswordOn(false)
-        }
+            setPasswordOn(false);
+        };
     };
 
     const inputOnClick = () => {
@@ -66,8 +63,8 @@ const LoginPage = () => {
             (users) => users.id === id && users.password === password
           );
           if (user === undefined) throw new Error();
-        console.log(user)
-    }
+        navigate('/home',{state:user});
+    };
   
     return(
         <>
@@ -82,7 +79,7 @@ const LoginPage = () => {
                             </Logo>
                             <LoginBox onSubmit={(e)=>{
                                 e.preventDefault();
-                                signIn()
+                                signIn();
                             }}>
                                 <A>
                                     <PlaceHolder className={ IdOn ? 'Idtarget' : ''}
@@ -109,7 +106,7 @@ const LoginPage = () => {
                                     autoComplete="on"
                                     onChange={e=>{
                                         addPasswardClass(e);
-                                    }} />
+                                    }}/>
                                 </A>
                                 <LoginButton type='submit' name='submit' value='로그인'/>
                                 <Or>
