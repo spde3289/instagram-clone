@@ -4,7 +4,6 @@ import axios from "axios";
 // 아이콘
 import { MdOutlineCancel } from 'react-icons/md'
 
-
 const JoinPage = (props) => {
 
     const [Id, setId] = useState('');
@@ -19,8 +18,9 @@ const JoinPage = (props) => {
 
     async function getUser() {
         try {
-            const response = await axios.get('http://localhost:3001/account');
+            const response = await axios.get('http://localhost:3001/account',);
             console.log(response.data);
+
             setAccount(response.data)
         } catch (error) {
             console.error(error);
@@ -41,7 +41,7 @@ const JoinPage = (props) => {
                 "name": Name
             }
         }).then((res)=>{
-            console.log(res);
+            console.log(res.data);
         }).catch(error=>{
             console.log(error);
             throw new Error(error);

@@ -42,6 +42,7 @@ const LoginPage = () => {
     };
 
     const addPasswardClass = (e) => {
+        getUser();
         setPasswordOn(true);
         setPassword(e.target.value);
         if(e.target.value.length === 0){
