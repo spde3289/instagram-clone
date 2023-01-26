@@ -47,12 +47,14 @@ const Sidebar = () => {
 
     const handleClickOutSide = (e) => {
         console.log(ref.current.contains(e.target));
+        console.log(ref.current);
+        console.log(e.target)
         if (open && !ref.current.contains(e.target)) {
           setOpen(false);
         };
     };
     
-      useEffect(() => {
+    useEffect(() => {
         if (open) document.addEventListener('mousedown', handleClickOutSide);
         return () => {
           document.removeEventListener('mousedown', handleClickOutSide);
