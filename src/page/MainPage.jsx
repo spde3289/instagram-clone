@@ -14,7 +14,7 @@ const MainPage = () => {
             <GlobalStyle/>
             <Sidebar/>
             <Main>
-                <PostBox/>
+                <PostBox user={location}/>
             </Main>
         </Layout>
     );

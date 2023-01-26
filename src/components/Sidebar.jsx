@@ -22,10 +22,12 @@ import LogoImg from '../imgs/Logo.png';
 
 //컴포넌트
 import MoreSubMenuPopUp from './MoreSubMenuPopUp';
+import Create from './Create';
 
 const Sidebar = () => {
 
     const [open, setOpen] = useState(false);
+    const [create, SetCreate] = useState(false);
     const ref = useRef();
     const menuList = [
         {key: 1, text: '홈', icon: <MdHomeFilled className="icon"/> },
@@ -39,11 +41,25 @@ const Sidebar = () => {
     ];
 
     const menu = menuList.map(item=>(
-        <Menu key={item.key} className='cursor'>
+        <Menu key={item.key} className='cursor' onClick={()=>{
+            OnCategory(item.text);
+        }}>
             {item.icon}
             <MenuText>{item.text}</MenuText>
         </Menu>
     ));
+    
+    const OnCategory = (text) => {
+        if(text === '만들기'){
+            OnCreate();
+        };
+    };
+
+    const OnCreate = () => {
+        SetCreate(!create);
+        console.log(create);
+    };
+
 
     const handleClickOutSide = (e) => {
         if (open && !ref.current.contains(e.target)) {
@@ -68,6 +84,7 @@ const Sidebar = () => {
                         </a>
                     </LogoBox>
                 </div>
+                { create ? <Create onCreate={create} /> : <></> }
                 <ul>
                     {menu}
                 </ul>

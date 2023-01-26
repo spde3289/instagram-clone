@@ -144,9 +144,6 @@ const JoinBox = styled.div`
         width: 24px;
         height: 32px;
     };
-    .text{
-
-    };
     .alarm{
         color: red;
     };

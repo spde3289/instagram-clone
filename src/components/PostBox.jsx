@@ -2,8 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { CgProfile, CgMoreAlt } from 'react-icons/cg'
 
-const PostBox = () => {
-
+const PostBox = (props) => {
+    console.log(props.user.state.id)
+    const id = props.user.state.id
     return(
         <>
             <PostLayout>
@@ -11,7 +12,7 @@ const PostBox = () => {
                     <PostHeader>
                         <Profile>
                             <CgProfile className='icon'/>
-                            <div className='name'>사용자 1 </div>
+                            <div className='name'>{id}</div>
                         </Profile>
                         <Option>    
                             <CgMoreAlt className='icon'/>
@@ -46,14 +47,17 @@ const Post = styled.div`
 const PostHeader = styled.div`
     display: flex;
     justify-content: space-between;
+    align-items: center;
 `;
 
 const Profile = styled.div`
     display: flex;
     align-items: center;
+    
     .icon{
         width: 32px;
         height: 32px;
+        margin: 10px;
     }
     .name{
 
