@@ -57,7 +57,6 @@ const Sidebar = () => {
 
     const OnCreate = () => {
         SetCreate(!create);
-        console.log(create);
     };
 
 
@@ -84,7 +83,7 @@ const Sidebar = () => {
                         </a>
                     </LogoBox>
                 </div>
-                { create ? <Create onCreate={create} /> : <></> }
+                { create ? <Create onCreate={OnCreate} /> : <></> }
                 <ul>
                     {menu}
                 </ul>
