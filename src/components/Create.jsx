@@ -6,11 +6,11 @@ import { HiXMark } from 'react-icons/hi2'
 
 const Create = (props) => {
 
-    console.log(props)
-
     return(
         <CreateLayout>
-            <HiXMark className="icon"/>
+            <HiXMark className="icon" onClick={()=>{
+                props.onCreate()
+            }}/>
             <CreateBox>
                 <Flexbox>
                     <CreateHeader>
