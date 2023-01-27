@@ -22,7 +22,7 @@ const LoginPage = () => {
     const [users, setUsers] = useState();
     const input = useRef();
     const navigate = useNavigate();
-    
+
     async function getUser() {
         try {
             const response = await axios.get('http://localhost:3001/account');
@@ -55,8 +55,8 @@ const LoginPage = () => {
     };
 
     const PopUp = () => {
-        setOnLogin(!onLogin)
-    }
+        setOnLogin(!onLogin);
+    };
 
     const signIn = () => {
         const user = users.find(
