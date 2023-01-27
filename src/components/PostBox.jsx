@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { CgProfile, CgMoreAlt } from 'react-icons/cg'
+import carbon from '../imgs/carbon.png'
 
 const PostBox = (props) => {
     console.log(props.user.state.id)
@@ -10,18 +11,25 @@ const PostBox = (props) => {
             <PostLayout>
                 <Post>
                     <PostHeader>
-                        <Profile>
+                        <PostProfile>
                             <CgProfile className='icon'/>
                             <div className='name'>{id}</div>
-                        </Profile>
+                        </PostProfile>
                         <Option>    
                             <CgMoreAlt className='icon'/>
                         </Option>
                     </PostHeader>  
-                    <div>
-                        <PostImg></PostImg>
+                    <PostImgRaping>
                         
-                    </div>
+                        <PostImgList>
+                            <li>
+                                <PostImg src={carbon}/>
+                            </li>
+                            <li>
+                                <PostImg src={carbon}/>
+                            </li>
+                        </PostImgList>
+                    </PostImgRaping>
                 </Post>
                 <Comment></Comment>
             </PostLayout>
@@ -50,7 +58,7 @@ const PostHeader = styled.div`
     align-items: center;
 `;
 
-const Profile = styled.div`
+const PostProfile = styled.div`
     display: flex;
     align-items: center;
     
@@ -72,8 +80,17 @@ const Option = styled.div`
     }
 `;
 
-const PostImg = styled.div`
+const PostImgRaping = styled.div`
+    width: 470px;
+    overflow: hidden;
+`;
 
+const PostImgList = styled.ul`
+    display: flex;
+`;
+
+const PostImg = styled.img`
+    width: 470px;
 `;
 
 const Comment = styled.div`
