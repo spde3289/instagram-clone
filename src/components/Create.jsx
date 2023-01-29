@@ -1,7 +1,28 @@
-import React from "react";
+import React, {} from "react";
 import styled from "styled-components";
 
 import { HiXMark } from 'react-icons/hi2'
+
+import {useCallback} from 'react'
+import {useDropzone} from 'react-dropzone'
+
+function MyDropzone() {
+  const onDrop = useCallback(acceptedFiles => {
+    // Do something with the files
+  }, [])
+  const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
+
+  return (
+    <div {...getRootProps()}>
+      <input {...getInputProps()} />
+      {
+        isDragActive ?
+          <p>Drop the files here ...</p> :
+          <p>Drag 'n' drop some files here, or click to select files</p>
+      }
+    </div>
+  )
+}
 
 
 const Create = (props) => {
@@ -17,7 +38,7 @@ const Create = (props) => {
                         새 게시물 만들기
                     </CreateHeader>
                     <CreateBody>
-                        사진과 동영상을 여기에 끌어다 넣으세요   
+                        <MyDropzone/>
                     </CreateBody>
 
                 </Flexbox>
@@ -53,7 +74,7 @@ const CreateBox = styled.div`
 
 const Flexbox = styled.div`
     width: 710px;
-    height: 753px;
+
     border-radius: 18px;
     text-align: center;
     background: #fff;
@@ -68,7 +89,9 @@ const CreateHeader = styled.div`
 `;
 
 const CreateBody = styled.div`
-
+    margin: 40px 40px;
+    height: 490px;
+    border: 2px dashed #cccccc;
 `;
 
 
