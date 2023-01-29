@@ -6,6 +6,9 @@ import carbon from '../imgs/carbon.png'
 const PostBox = (props) => {
     console.log(props.user.state.id)
     const id = props.user.state.id
+
+
+
     return(
         <>
             <PostLayout>
