@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from "axios";
 import styled from 'styled-components';
 import { useLocation } from 'react-router';
 // 컴포넌트 
@@ -7,14 +8,31 @@ import Sidebar from '../components/Sidebar'
 import PostBox from '../components/PostBox';
 
 const MainPage = () => {
+
+    const [postList, setPostList] = useState()
+
     const location = useLocation();
-    console.log(location)
+    const a = location.state.id
+
+    console.log(postList)
+
+    useEffect(()=>{
+        axios.get('http://localhost:3001/user')
+        .then((response) =>{
+            const found = response.data.find(e => e.id === a);
+            setPostList(found);})
+        .catch((error) => console.log(error))
+    },[a])
+
     return(
         <Layout>
             <GlobalStyle/>
             <Sidebar/>
             <Main>
-                <PostBox user={location}/>
+                
+                <PostBox user={location} onClick={()=>{
+
+                }}/>
             </Main>
         </Layout>
     );
