@@ -1,30 +1,80 @@
-import React, {} from "react";
+import React, { useEffect, useState } from "react";
+import {useDropzone} from 'react-dropzone'
 import styled from "styled-components";
 
 import { HiXMark } from 'react-icons/hi2'
 
-import {useCallback} from 'react'
-import {useDropzone} from 'react-dropzone'
+const Previews = (props) => {
+  
+    const [files, setFiles] = useState([]);
+    const {
+        getRootProps, 
+        getInputProps} = useDropzone({
+            maxFiles:10,
+            accept: {
+                'image/*': []
+            },
+            onDrop: (acceptedFiles, fileRejections) => {
+                const maxFiles = fileRejections.length === 0;
+                const addFile = files.length === 0 ;
+                const newFiles = [...files];
+                newFiles.push(...acceptedFiles.map(file => Object.assign(file, {
+                        preview: URL.createObjectURL(file)
+                })));
+                
+                if(!maxFiles) alert('이미지를 10개만 업로드 할 수 있습니다')
+                
+                if(addFile){
+                    setFiles(acceptedFiles.map(file => Object.assign(file, {
+                        preview: URL.createObjectURL(file)
+                    })));
+                }else if(files.length < 10){
+                    setFiles(newFiles);
+                }else alert('이미지가 10개를 초과 했습니다.');
 
-function MyDropzone() {
-  const onDrop = useCallback(acceptedFiles => {
-    // Do something with the files
-  }, [])
-  const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
+            }
+        });
+    
 
-  return (
-    <div {...getRootProps()}>
-      <input {...getInputProps()} />
-      {
-        isDragActive ?
-          <p>Drop the files here ...</p> :
+    const thumbs = [...files].map(file => (
+      <Thumb key={file.name}>
+        <ThumbInner>
+          <PostImg
+            src={file.preview}
+            alt={file.name}
+            onLoad={() => { URL.revokeObjectURL(file.preview) }}
+            onClick={(e)=>{
+                const deletimg = files.filter(file => file.preview !== e.target.src )
+                setFiles(deletimg)
+            }}
+          />
+        </ThumbInner>
+      </Thumb>
+    ));
+  
+    useEffect(() => {
+        return () => files.forEach(file => URL.revokeObjectURL(file.preview));
+    }, [files]);
+  
+    return (
+      <section className="container">
+        <ImgInput {...getRootProps({className: 'dropzone'})}>
+          <input {...getInputProps()} />
           <p>Drag 'n' drop some files here, or click to select files</p>
-      }
-    </div>
-  )
+        </ImgInput>
+        <ThumbsContainer>
+          {thumbs}
+        </ThumbsContainer>
+        <Button onClick={(e)=>{
+            props.onFile(files);
+            props.onCreate()
+            console.log(e.target);
+            e.preventDefault();
+        }}>dasdasd</Button>
+      </section>
+    );
 }
-
-
+  
 const Create = (props) => {
 
     return(
@@ -38,11 +88,9 @@ const Create = (props) => {
                         새 게시물 만들기
                     </CreateHeader>
                     <CreateBody>
-                        <MyDropzone/>
+                        <Previews onFile={props.onFile} onCreate={props.onCreate}/>
                     </CreateBody>
-
                 </Flexbox>
-                
             </CreateBox>
         </CreateLayout>
     );
@@ -74,7 +122,6 @@ const CreateBox = styled.div`
 
 const Flexbox = styled.div`
     width: 710px;
-
     border-radius: 18px;
     text-align: center;
     background: #fff;
@@ -90,10 +137,51 @@ const CreateHeader = styled.div`
 
 const CreateBody = styled.div`
     margin: 40px 40px;
-    height: 490px;
-    border: 2px dashed #cccccc;
+    height: 670px;
 `;
 
+const ImgInput = styled.div`
+    border: 2px dashed #cccccc;
+    height: 100px;
+    width: 100%;
+`;
+
+const ThumbsContainer = styled.aside`
+    display: flex;
+    flex-Direction: row;
+    flex-Wrap: wrap;
+    margin-Top: 16px;
+`;
+
+const Thumb = styled.div`
+    display: inline-flex;
+    justify-content: center;
+    border-Radius: 2px;
+    border: 1px solid #eaeaea;
+    margin-Bottom: 8px;
+    margin-Right: 8px;
+    width: 100px;
+    height: 100px;
+    padding: 4px;
+    box-Sizing: border-box;
+`;
+
+const ThumbInner = styled.div`
+    display: flex;
+    min-width: 0;
+    overflow: hidden;
+`;
+
+const PostImg = styled.img`
+    display: block;
+    width: auto;
+    height: 100%;
+`;
+
+const Button = styled.button`
+    width: 100px;
+    height: 30px;
+`;
 
 
 export default Create;

@@ -24,7 +24,7 @@ import LogoImg from '../imgs/Logo.png';
 import MoreSubMenuPopUp from './MoreSubMenuPopUp';
 import Create from './Create';
 
-const Sidebar = () => {
+const Sidebar = (props) => {
 
     const [open, setOpen] = useState(false);
     const [create, SetCreate] = useState(false);
@@ -59,6 +59,10 @@ const Sidebar = () => {
         SetCreate(!create);
     };
 
+    const OnFile = (file) => {
+        props.onPostImg(file)
+        console.log(file, file)
+    }
 
     const handleClickOutSide = (e) => {
         if (open && !ref.current.contains(e.target)) {
@@ -83,7 +87,7 @@ const Sidebar = () => {
                         </a>
                     </LogoBox>
                 </div>
-                { create ? <Create onCreate={OnCreate} /> : <></> }
+                { create ? <Create onCreate={OnCreate} onFile={OnFile}/> : <></> }
                 <ul>
                     {menu}
                 </ul>
@@ -108,11 +112,13 @@ const Sidebar = () => {
 };
 
 const Nav = styled.nav`
+    position: fixed;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     padding: 8px 12px 20px;
     width: 244px;
+    height: 100%;
     box-sizing: border-box;
     border-right: 1px solid #cccccc;
     background: #fff;

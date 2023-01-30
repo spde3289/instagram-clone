@@ -9,30 +9,37 @@ import PostBox from '../components/PostBox';
 
 const MainPage = () => {
 
-    const [postList, setPostList] = useState()
+    const [userInfo, setuserInfo] = useState()
+    const [postImg, setpostImg] = useState()
 
     const location = useLocation();
     const a = location.state.id
-
-    console.log(postList)
-
+    
     useEffect(()=>{
         axios.get('http://localhost:3001/user')
         .then((response) =>{
             const found = response.data.find(e => e.id === a);
-            setPostList(found);})
+            setuserInfo(found);})
         .catch((error) => console.log(error))
     },[a])
+
+    const OnPostImg = (file) => {
+        setpostImg(file)
+        console.log(file)
+        console.log(userInfo)
+    };
 
     return(
         <Layout>
             <GlobalStyle/>
-            <Sidebar/>
+            <Sidebar onPostImg={OnPostImg}/>
             <Main>
-                
-                <PostBox user={location} onClick={()=>{
+                <button onClick={(e)=>{
+                    e.preventDefault();
+                    console.log(postImg)
+                    }}>asdasdasd</button>
+                { postImg ? <PostBox user={location} imgFile={postImg}/> : <></> }
 
-                }}/>
             </Main>
         </Layout>
     );
@@ -40,7 +47,7 @@ const MainPage = () => {
 
 const Layout = styled.div`
     display: flex;
-    height: 100vh;
+    height: 100%;
 `;
 
 const Main = styled.main`

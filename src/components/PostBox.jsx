@@ -1,14 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
 import { CgProfile, CgMoreAlt } from 'react-icons/cg'
-import carbon from '../imgs/carbon.png'
 
 const PostBox = (props) => {
-    console.log(props.user.state.id)
+
     const id = props.user.state.id
+    const files = props.imgFile
 
-
-
+    const thumbs = [...files].map(file => (
+            <PostImg
+                key={file.name}
+                src={file.preview}
+                alt={file.name}
+            />
+      ));
+        console.log(thumbs)
     return(
         <>
             <PostLayout>
@@ -23,18 +29,11 @@ const PostBox = (props) => {
                         </Option>
                     </PostHeader>  
                     <PostImgRaping>
-                        
                         <PostImgList>
-                            <li>
-                                <PostImg src={carbon}/>
-                            </li>
-                            <li>
-                                <PostImg src={carbon}/>
-                            </li>
+                            {thumbs}
                         </PostImgList>
                     </PostImgRaping>
                 </Post>
-                <Comment></Comment>
             </PostLayout>
         </>
     );
@@ -48,6 +47,7 @@ const PostLayout = styled.div`
     border: 1px solid #cccccc;
     border-radius: 8px;
     background: #ffffff;
+    height: 500px;
 `;
 
 const Post = styled.div`
@@ -93,11 +93,9 @@ const PostImgList = styled.ul`
 `;
 
 const PostImg = styled.img`
-    width: 470px;
-`;
-
-const Comment = styled.div`
-
+    display: block;
+    width: auto;
+    height: 100%;
 `;
 
 export default PostBox;
