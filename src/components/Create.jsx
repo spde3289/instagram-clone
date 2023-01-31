@@ -21,8 +21,9 @@ const Previews = (props) => {
                 newFiles.push(...acceptedFiles.map(file => Object.assign(file, {
                         preview: URL.createObjectURL(file)
                 })));
-                
-                if(!maxFiles) alert('이미지를 10개만 업로드 할 수 있습니다')
+                console.log(acceptedFiles)
+                console.log(fileRejections)
+                if(!maxFiles) alert('이미지를 10개만 업로드 할 수 있습니다');
                 
                 if(addFile){
                     setFiles(acceptedFiles.map(file => Object.assign(file, {
@@ -31,10 +32,8 @@ const Previews = (props) => {
                 }else if(files.length < 10){
                     setFiles(newFiles);
                 }else alert('이미지가 10개를 초과 했습니다.');
-
             }
         });
-    
 
     const thumbs = [...files].map(file => (
       <Thumb key={file.name}>
@@ -44,14 +43,15 @@ const Previews = (props) => {
             alt={file.name}
             onLoad={() => { URL.revokeObjectURL(file.preview) }}
             onClick={(e)=>{
-                const deletimg = files.filter(file => file.preview !== e.target.src )
-                setFiles(deletimg)
+                const deletimg = files.filter(file => file.preview !== e.target.src );
+                setFiles(deletimg);
             }}
           />
         </ThumbInner>
       </Thumb>
     ));
-  
+
+    console.log(thumbs)
     useEffect(() => {
         return () => files.forEach(file => URL.revokeObjectURL(file.preview));
     }, [files]);
@@ -67,7 +67,7 @@ const Previews = (props) => {
         </ThumbsContainer>
         <Button onClick={(e)=>{
             props.onFile(files);
-            props.onCreate()
+            props.onCreate();
             console.log(e.target);
             e.preventDefault();
         }}>dasdasd</Button>
@@ -80,7 +80,7 @@ const Create = (props) => {
     return(
         <CreateLayout>
             <HiXMark className="icon" onClick={()=>{
-                props.onCreate()
+                props.onCreate();
             }}/>
             <CreateBox>
                 <Flexbox>
