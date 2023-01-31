@@ -10,7 +10,7 @@ import PostBox from '../components/PostBox';
 const MainPage = () => {
 
     const [userInfo, setuserInfo] = useState()
-    const [postImg, setpostImg] = useState()
+    const [postImg, setpostImg] = useState([])
 
     const location = useLocation();
     const a = location.state.id
