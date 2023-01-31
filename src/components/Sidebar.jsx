@@ -60,8 +60,9 @@ const Sidebar = (props) => {
     };
 
     const OnFile = (file) => {
+
         props.onPostImg(file)
-        console.log(file, file)
+        console.log(file)
     }
 
     const handleClickOutSide = (e) => {
