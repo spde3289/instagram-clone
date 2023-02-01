@@ -26,33 +26,6 @@
       "name": "a"
     }
   ],
-  "user" : [
-    {
-      "id" : "spde3289",
-      "userInfo" : {
-        "PostList" : [
-          {
-            "imgList" : ["instagram-clone/src/imgs/carbon.png"],
-            "text" : "",
-            "comment" : [],
-            "like" : "0"
-          }
-        ]
-      }
-    },
-    {
-      "id" : "Instargram1",
-      "userInfo" : {
-        "PostList" : [
-          {
-            "imgList" : ["instagram-clone/src/imgs/carbon.png"],
-            "text" : "",
-            "comment" : [],
-            "like" : 0
-          }
-        ]
-      }
-    }
+  "user": [
   ]
 }
-
