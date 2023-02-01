@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef} from 'react';
 import styled from 'styled-components';
-
 // 아이콘 
 import { 
     MdHomeFilled, 
@@ -16,10 +15,8 @@ import {
 import { 
     HiOutlinePaperAirplane,
 } from 'react-icons/hi';
-
 // 이미지
 import LogoImg from '../imgs/Logo.png';
-
 //컴포넌트
 import MoreSubMenuPopUp from './MoreSubMenuPopUp';
 import Create from './Create';
@@ -60,11 +57,9 @@ const Sidebar = (props) => {
     };
 
     const OnFile = (file) => {
-
-        props.onPostImg(file)
-        console.log(file)
-    }
-
+        props.onPostInfo(file)
+    };
+    
     const handleClickOutSide = (e) => {
         if (open && !ref.current.contains(e.target)) {
           setOpen(false);
