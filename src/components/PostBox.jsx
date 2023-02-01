@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 //아이콘
 import { CgProfile, CgMoreAlt } from 'react-icons/cg'
@@ -6,10 +6,17 @@ import { CgProfile, CgMoreAlt } from 'react-icons/cg'
 const PostBox = (props) => {
 
     const id = props.user.state.id
-    const file = props.postInfo
+    
+    const [file,setFile] = useState();
+    setFile(props.file)
 
-    const thumbs = [file].map(file => (
-        <li key={file.name}>
+    file?.map(file => Object.assign(file, {
+        preview: URL.createObjectURL(file)
+    }))
+
+ 
+    const thumbs = file.map((file,index) => (
+        <li key={index}>
             <PostImg
                 src={file.preview}
                 alt={file.name}
@@ -17,10 +24,8 @@ const PostBox = (props) => {
             />
         </li>
       ));
-      
-      useEffect(() => {
-        return () => file.forEach(file => URL.revokeObjectURL(file.preview) );
-    }, [file]);
+     
+       
 
     return(
         <>
@@ -33,8 +38,13 @@ const PostBox = (props) => {
                         </PostProfile>
                         <Option>    
                             <CgMoreAlt className='icon'/>
+                        <button onClick={(e)=>{
+                            e.preventDefault();
+                            console.log(thumbs,file)
+                            
+                        }}>sadasda</button>
                         </Option>
-                    </PostHeader>  
+                    </PostHeader>    
                     <PostImgRaping>
                         <PostImgList>
                             {thumbs}
@@ -93,6 +103,7 @@ const Option = styled.div`
 const PostImgRaping = styled.div`
     width: 470px;
     overflow: hidden;
+
 `;
 
 const PostImgList = styled.ul`
@@ -103,6 +114,6 @@ const PostImg = styled.img`
     display: block;
     width: auto;
     height: 100%;
-`;
+`; 
 
 export default PostBox;
