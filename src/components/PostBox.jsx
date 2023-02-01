@@ -1,25 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
+//아이콘
 import { CgProfile, CgMoreAlt } from 'react-icons/cg'
 
 const PostBox = (props) => {
 
-    const [files, setFiles] = useState([])
     const id = props.user.state.id
-    const file = props.imgFile
+    const file = props.postInfo
 
-    const thumbs = [...file].map(file => (
-        <li>
+    const thumbs = [file].map(file => (
+        <li key={file.name}>
             <PostImg
-                key={file.name}
                 src={file.preview}
                 alt={file.name}
                 onLoad={(e) => { console.log(e) }}
             />
         </li>
       ));
-
-    useEffect(() => {
+      
+      useEffect(() => {
         return () => file.forEach(file => URL.revokeObjectURL(file.preview) );
     }, [file]);
 
