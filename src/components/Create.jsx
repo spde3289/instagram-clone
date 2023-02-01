@@ -21,8 +21,6 @@ const Previews = (props) => {
                 newFiles.push(...acceptedFiles.map(file => Object.assign(file, {
                         preview: URL.createObjectURL(file)
                 })));
-                console.log(acceptedFiles)
-                console.log(fileRejections)
                 if(!maxFiles) alert('이미지를 10개만 업로드 할 수 있습니다');
                 
                 if(addFile){
@@ -51,7 +49,6 @@ const Previews = (props) => {
       </Thumb>
     ));
 
-    console.log(thumbs)
     useEffect(() => {
         return () => files.forEach(file => URL.revokeObjectURL(file.preview));
     }, [files]);
