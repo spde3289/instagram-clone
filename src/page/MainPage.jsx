@@ -9,36 +9,76 @@ import PostBox from '../components/PostBox';
 
 const MainPage = () => {
 
-    const [userInfo, setuserInfo] = useState()
-    const [postImg, setpostImg] = useState([])
+    const [userInfo, setuserInfo] = useState([]);
+    const [postInfo, setpostInfo] = useState();
+    const [postInfoList, setpostInfoList] = useState();
 
     const location = useLocation();
-    const a = location.state.id
+    const userId = location.state.id;
     
     useEffect(()=>{
         axios.get('http://localhost:3001/user')
         .then((response) =>{
-            const found = response.data.find(e => e.id === a);
-            setuserInfo(found);})
+            console.log(response.data)
+            })
         .catch((error) => console.log(error))
-    },[a])
+    },[userId])
 
-    const OnPostImg = (file) => {
-        setpostImg(file)
-        console.log(file)
-        console.log(userInfo)
+    async function postUser() {
+        axios({
+            method:"POST",
+            url: 'http://localhost:3001/user',
+            data: postInfo
+        }).then((res)=>{
+            console.log(res.data);
+            setuserInfo(res.data);
+        }).catch(error=>{
+            console.log(error);
+            throw new Error(error);
+        });
+      };
+
+    async function getUser() {
+        axios({
+            method:"get",
+            url: 'http://localhost:3001/user',
+        }).then((res)=>{
+            console.log(res.data);
+            setpostInfoList(res.data);
+        }).catch(error=>{
+            console.log(error);
+            throw new Error(error);
+        });
+      };
+
+    const OnPostInfo = (file) => {
+        let obj = Object.assign({}, file);
+        setpostInfo(obj);
     };
+
+    const postList = postInfoList.map(info=>(
+        <PostBox user={location} postInfo={info} />
+    )) 
+
 
     return(
         <Layout>
             <GlobalStyle/>
-            <Sidebar onPostImg={OnPostImg}/>
+            <Sidebar onPostInfo={OnPostInfo}/>
             <Main>
                 <button onClick={(e)=>{
                     e.preventDefault();
-                    console.log(postImg)
+                    postUser()
+                    console.log(userInfo)
+                    console.log(postInfo)
                     }}>asdasdasd</button>
-                { postImg ? <PostBox user={location} imgFile={postImg}/> : <></> }
+                <button onClick={(e)=>{
+                    e.preventDefault();
+                    getUser()
+                    console.log(userInfo)
+                    console.log(postInfo)
+                    }}>얻기</button>
+                { userInfo.length ? {postList} : <></> }
 
             </Main>
         </Layout>
