@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 //import axios from "axios";
 import styled from 'styled-components';
 import { useLocation } from 'react-router';
@@ -19,7 +19,7 @@ const MainPage = () => {
         setpostInfo(file);
     };  
     
-    const aa = ()=>{
+    const aa = useCallback(()=>{
         if(postInfo !== undefined) {
             const a = [...postInfoList];
             a.push(postInfo);
@@ -27,9 +27,8 @@ const MainPage = () => {
             console.log(postInfo)
             console.log(postInfoList === undefined)
         }
-    }
+    },[postInfo])
     
-
     const postList = postInfoList?.map((info, index)=> (
         <PostBox key={index} user={location} postInfo={info} />
     ));
