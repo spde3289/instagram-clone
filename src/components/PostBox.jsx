@@ -103,7 +103,6 @@ const PostImgRaping = styled.div`
 const PostImgList = styled.ul`
     display: flex;
     position: relative;
-    
     left: 0px;
 `;
 
