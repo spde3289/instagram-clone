@@ -48,7 +48,7 @@ const Previews = (props) => {
         </ThumbInner>
       </Thumb>
     ));
-    console.log(props)
+
     useEffect(() => {
         return () => files.forEach(file => URL.revokeObjectURL(file.preview));
     }, [files]);
@@ -96,6 +96,7 @@ const Create = (props) => {
 
 const CreateLayout = styled.div`
     position: absolute;
+    
     top: 0;
     left: 0;
     width: 100vw;
@@ -116,6 +117,7 @@ const CreateBox = styled.div`
     align-items: center;
     justify-content: center;
     height: 100%;
+    z-index: 2;
 `;
 
 const Flexbox = styled.div`
