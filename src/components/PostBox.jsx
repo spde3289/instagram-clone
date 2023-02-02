@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import styled from 'styled-components';
 //아이콘
 import { CgProfile, CgMoreAlt } from 'react-icons/cg'
@@ -7,20 +7,19 @@ const PostBox = (props) => {
 
     const id = props.user.state.id
     
-    const [file,setFile] = useState();
-    setFile(props.file)
+    const file = props.postInfo;
+    console.log(props)
 
     file?.map(file => Object.assign(file, {
         preview: URL.createObjectURL(file)
     }))
 
  
-    const thumbs = file.map((file,index) => (
+    const thumbs = file?.map((file,index) => (
         <li key={index}>
             <PostImg
                 src={file.preview}
                 alt={file.name}
-                onLoad={(e) => { console.log(e) }}
             />
         </li>
       ));
@@ -38,11 +37,6 @@ const PostBox = (props) => {
                         </PostProfile>
                         <Option>    
                             <CgMoreAlt className='icon'/>
-                        <button onClick={(e)=>{
-                            e.preventDefault();
-                            console.log(thumbs,file)
-                            
-                        }}>sadasda</button>
                         </Option>
                     </PostHeader>    
                     <PostImgRaping>

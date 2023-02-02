@@ -48,7 +48,7 @@ const Previews = (props) => {
         </ThumbInner>
       </Thumb>
     ));
-
+    console.log(props)
     useEffect(() => {
         return () => files.forEach(file => URL.revokeObjectURL(file.preview));
     }, [files]);
@@ -65,6 +65,7 @@ const Previews = (props) => {
         <Button onClick={(e)=>{
             props.onFile(files);
             props.onCreate();
+            props.onClick();
             console.log(e.target);
             e.preventDefault();
         }}>dasdasd</Button>
@@ -73,7 +74,7 @@ const Previews = (props) => {
 }
   
 const Create = (props) => {
-
+    
     return(
         <CreateLayout>
             <HiXMark className="icon" onClick={()=>{
@@ -85,7 +86,7 @@ const Create = (props) => {
                         새 게시물 만들기
                     </CreateHeader>
                     <CreateBody>
-                        <Previews onFile={props.onFile} onCreate={props.onCreate}/>
+                        <Previews onFile={props.onFile} onCreate={props.onCreate} onClick={props.onClick}/>
                     </CreateBody>
                 </Flexbox>
             </CreateBox>
