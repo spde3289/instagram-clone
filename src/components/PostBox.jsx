@@ -16,15 +16,15 @@ const PostBox = (props) => {
 
  
     const thumbs = file?.map((file,index) => (
-        <li key={index}>
-            <PostImg
-                src={file.preview}
-                alt={file.name}
-            />
-        </li>
+        <Thumb  key={index}>
+            <ThumbInner>
+                <PostImg
+                    src={file.preview}
+                    alt={file.name}
+                />
+            </ThumbInner>
+        </Thumb >
       ));
-     
-       
 
     return(
         <>
@@ -102,6 +102,29 @@ const PostImgRaping = styled.div`
 
 const PostImgList = styled.ul`
     display: flex;
+    position: relative;
+    
+    left: 0px;
+`;
+
+const Thumb = styled.li`
+    display: inline-flex;
+    justify-content: center;
+    border-Radius: 2px;
+    border: 1px solid #eaeaea;
+    margin-Bottom: 8px;
+    margin-Right: 8px;
+    width: 470px;
+    height: 470px;
+    padding: 4px;
+    box-Sizing: border-box;
+`;
+
+const ThumbInner = styled.div`
+    display: flex;
+    justify-content: center;
+    width: 470px;
+    overflow: hidden;
 `;
 
 const PostImg = styled.img`
