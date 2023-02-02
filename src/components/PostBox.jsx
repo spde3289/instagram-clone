@@ -97,13 +97,20 @@ const Option = styled.div`
 const PostImgRaping = styled.div`
     width: 470px;
     overflow: hidden;
-
+    position: relative;
 `;
 
 const PostImgList = styled.ul`
     display: flex;
-    position: relative;
-    left: 0px;
+    animation-name: 'box-ani';
+    @keyframes box-ani {
+	from {
+		transform: translate(0, 0);
+	}
+	to {
+		transform: translate(0, 100px);
+	}
+}
 `;
 
 const Thumb = styled.li`
@@ -131,5 +138,7 @@ const PostImg = styled.img`
     width: auto;
     height: 100%;
 `; 
+
+
 
 export default PostBox;
