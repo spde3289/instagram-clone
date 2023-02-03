@@ -29,6 +29,7 @@ const Previews = (props) => {
                     })));
                 }else if(files.length < 10){
                     setFiles(newFiles);
+                    
                 }else alert('이미지가 10개를 초과 했습니다.');
             }
         });
@@ -52,6 +53,11 @@ const Previews = (props) => {
     useEffect(() => {
         return () => files.forEach(file => URL.revokeObjectURL(file.preview));
     }, [files]);
+
+    useEffect(()=>{
+        console.log(files)
+        props.onFile(files);
+    },[files, props]);
   
     return (
       <section className="container">
@@ -63,7 +69,7 @@ const Previews = (props) => {
           {thumbs}
         </ThumbsContainer>
         <Button onClick={(e)=>{
-            props.onFile(files);
+           
             props.onCreate();
             props.onClick();
             console.log(e.target);
