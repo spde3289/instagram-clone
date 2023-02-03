@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 //아이콘
 import { CgProfile, CgMoreAlt } from 'react-icons/cg'
@@ -6,13 +6,18 @@ import { CgProfile, CgMoreAlt } from 'react-icons/cg'
 const PostBox = (props) => {
 
     const id = props.user.state.id
-    
+    const [files, setFiles] = useState([])
     const file = props.postInfo;
     console.log(props)
 
-    file?.map(file => Object.assign(file, {
+    files?.map(file => Object.assign(file, {
         preview: URL.createObjectURL(file)
     }))
+
+    useEffect(() => {
+        setFiles(file)
+        //return () => file.forEach(file => URL.revokeObjectURL(file.preview));
+    }, [file]);
 
  
     const thumbs = file?.map((file,index) => (
@@ -97,20 +102,11 @@ const Option = styled.div`
 const PostImgRaping = styled.div`
     width: 470px;
     overflow: hidden;
-    position: relative;
 `;
 
 const PostImgList = styled.ul`
     display: flex;
-    animation-name: 'box-ani';
-    @keyframes box-ani {
-	from {
-		transform: translate(0, 0);
-	}
-	to {
-		transform: translate(0, 100px);
-	}
-}
+    
 `;
 
 const Thumb = styled.li`
