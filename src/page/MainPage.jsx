@@ -27,7 +27,7 @@ const MainPage = () => {
             console.log(postInfo)
             console.log(postInfoList === undefined)
         }
-    },[postInfo])
+    },[postInfo, postInfoList])
     
     const postList = postInfoList?.map((info, index)=> (
         <PostBox key={index} user={location} postInfo={info} />
