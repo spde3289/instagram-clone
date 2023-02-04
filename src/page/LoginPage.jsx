@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef} from 'react';
 import styled from 'styled-components';
 import axios from "axios";
 import { useNavigate } from 'react-router';
@@ -19,21 +19,23 @@ const LoginPage = () => {
     const [PasswordOn, setPasswordOn] = useState(false);
     const [id, setId] = useState('');
     const [password, setPassword] = useState('');
-    const [users, setUsers] = useState();
     const input = useRef();
     const navigate = useNavigate();
 
     async function getUser() {
         try {
             const response = await axios.get('http://localhost:3001/account');
-            setUsers(response.data);
+            const user = response.data.find(
+                (users) => users.id === id && users.password === password
+              );
+            if (user === undefined) throw new Error();
+            navigate('/home',{state:user});
         } catch (error) {
             console.error(error);
         };
     };
     
     const addIdClass = (e) => {
-        getUser();
         setIdOn(true);
         setId(e.target.value);
         if(e.target.value.length === 0){
@@ -41,8 +43,8 @@ const LoginPage = () => {
         };
     };
 
+
     const addPasswardClass = (e) => {
-        getUser();
         setPasswordOn(true);
         setPassword(e.target.value);
         if(e.target.value.length === 0){
@@ -58,14 +60,6 @@ const LoginPage = () => {
         setOnLogin(!onLogin);
     };
 
-    const signIn = () => {
-        const user = users.find(
-            (users) => users.id === id && users.password === password
-          );
-          if (user === undefined) throw new Error();
-        navigate('/home',{state:user});
-    };
-  
     return(
         <>
             <Main>  
@@ -79,7 +73,7 @@ const LoginPage = () => {
                             </Logo>
                             <LoginBox onSubmit={(e)=>{
                                 e.preventDefault();
-                                signIn();
+                                getUser();
                             }}>
                                 <A>
                                     <PlaceHolder className={ IdOn ? 'Idtarget' : ''}

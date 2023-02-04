@@ -56,12 +56,10 @@ const Sidebar = (props) => {
         SetCreate(!create);
     };
 
-    const OnFile = (file) => {
+    const OnPostInfo = (file) => {
         props.onPostInfo(file)
     };
-    const OnClick = () => {
-        props.onClick()
-    }
+    
     const handleClickOutSide = (e) => {
         if (open && !ref.current.contains(e.target)) {
           setOpen(false);
@@ -85,7 +83,7 @@ const Sidebar = (props) => {
                         </a>
                     </LogoBox>
                 </div>
-                { create ? <Create onCreate={OnCreate} onFile={OnFile} onClick={OnClick} /> : <></> }
+                { create ? <Create onCreate={OnCreate} onPostInfo={OnPostInfo} /> : <></> }
                 <ul>
                     {menu}
                 </ul>

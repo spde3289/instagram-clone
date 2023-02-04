@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 //import axios from "axios";
 import styled from 'styled-components';
 import { useLocation } from 'react-router';
@@ -9,25 +9,17 @@ import PostBox from '../components/PostBox';
 
 const MainPage = () => {
 
-    const [postInfo, setpostInfo] = useState();
     const [postInfoList, setpostInfoList] = useState([]);
 
 
     const location = useLocation();
 
     const OnPostInfo = (file) => {
-        setpostInfo(file);
+        const a = [...postInfoList];
+        a.push(file);
+        setpostInfoList(a)
     };  
-    
-    const aa = useCallback(()=>{
-        if(postInfo !== undefined) {
-            const a = [...postInfoList];
-            a.push(postInfo);
-            setpostInfoList(a)
-            console.log(postInfo)
-            console.log(postInfoList === undefined)
-        }
-    },[postInfo, postInfoList])
+
     
     const postList = postInfoList?.map((info, index)=> (
         <PostBox key={index} user={location} postInfo={info} />
@@ -36,16 +28,9 @@ const MainPage = () => {
     return(
         <Layout>
             <GlobalStyle/>
-            <Sidebar onPostInfo={OnPostInfo} onClick={aa}/>
+            <Sidebar onPostInfo={OnPostInfo}/>
             <Main>
-                <button onClick={(e)=>{
-                    e.preventDefault();
-                    console.log(postInfo === undefined )
-                    console.log(postInfoList !== undefined);
-                    }}>asdasdasd</button>
-        
                 { postInfoList.length ? postList : <></> }
-
             </Main>
         </Layout>
     );

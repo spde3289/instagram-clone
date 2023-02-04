@@ -19,8 +19,6 @@ const JoinPage = (props) => {
     async function getUser() {
         try {
             const response = await axios.get('http://localhost:3001/account',);
-            console.log(response.data);
-
             setAccount(response.data)
         } catch (error) {
             console.error(error);
@@ -40,10 +38,7 @@ const JoinPage = (props) => {
                 "password": Password,
                 "name": Name
             }
-        }).then((res)=>{
-            console.log(res.data);
         }).catch(error=>{
-            console.log(error);
             throw new Error(error);
         });
       };

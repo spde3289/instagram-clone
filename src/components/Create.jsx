@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {useDropzone} from 'react-dropzone'
 import styled from "styled-components";
 
@@ -21,15 +21,16 @@ const Previews = (props) => {
                 newFiles.push(...acceptedFiles.map(file => Object.assign(file, {
                         preview: URL.createObjectURL(file)
                 })));
-                if(!maxFiles) alert('이미지를 10개만 업로드 할 수 있습니다');
                 
+                if(!maxFiles) alert('이미지를 10개만 업로드 할 수 있습니다');
+
                 if(addFile){
                     setFiles(acceptedFiles.map(file => Object.assign(file, {
                         preview: URL.createObjectURL(file)
                     })));
+                    
                 }else if(files.length < 10){
                     setFiles(newFiles);
-                    
                 }else alert('이미지가 10개를 초과 했습니다.');
             }
         });
@@ -40,25 +41,17 @@ const Previews = (props) => {
           <PostImg
             src={file.preview}
             alt={file.name}
-            onLoad={() => { URL.revokeObjectURL(file.preview) }}
+            onLoad={() => { URL.revokeObjectURL(file.preview); }}
             onClick={(e)=>{
                 const deletimg = files.filter(file => file.preview !== e.target.src );
                 setFiles(deletimg);
+                
             }}
           />
         </ThumbInner>
       </Thumb>
     ));
 
-    useEffect(() => {
-        return () => files.forEach(file => URL.revokeObjectURL(file.preview));
-    }, [files]);
-
-    useEffect(()=>{
-        console.log(files)
-        props.onFile(files);
-    },[files, props]);
-  
     return (
       <section className="container">
         <ImgInput {...getRootProps({className: 'dropzone'})}>
@@ -69,10 +62,8 @@ const Previews = (props) => {
           {thumbs}
         </ThumbsContainer>
         <Button onClick={(e)=>{
-           
+            props.onPostInfo(files);
             props.onCreate();
-            props.onClick();
-            console.log(e.target);
             e.preventDefault();
         }}>dasdasd</Button>
       </section>
@@ -80,7 +71,6 @@ const Previews = (props) => {
 }
   
 const Create = (props) => {
-    console.log(props)
     return(
         <CreateLayout>
             <HiXMark className="icon" onClick={()=>{
@@ -92,7 +82,7 @@ const Create = (props) => {
                         새 게시물 만들기
                     </CreateHeader>
                     <CreateBody>
-                        <Previews onFile={props.onFile} onCreate={props.onCreate} onClick={props.onClick}/>
+                        <Previews onPostInfo={props.onPostInfo} onCreate={props.onCreate} />
                     </CreateBody>
                 </Flexbox>
             </CreateBox>
