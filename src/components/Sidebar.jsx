@@ -19,12 +19,11 @@ import {
 import LogoImg from '../imgs/Logo.png';
 //컴포넌트
 import MoreSubMenuPopUp from './MoreSubMenuPopUp';
-import Create from './Create';
+
 
 const Sidebar = (props) => {
 
     const [open, setOpen] = useState(false);
-    const [create, SetCreate] = useState(false);
     const ref = useRef();
     const menuList = [
         {key: 1, text: '홈', icon: <MdHomeFilled className="icon"/> },
@@ -48,18 +47,10 @@ const Sidebar = (props) => {
     
     const OnCategory = (text) => {
         if(text === '만들기'){
-            OnCreate();
+            props.onPopUp();
         };
     };
 
-    const OnCreate = () => {
-        SetCreate(!create);
-    };
-
-    const OnPostInfo = (file) => {
-        props.onPostInfo(file)
-    };
-    
     const handleClickOutSide = (e) => {
         if (open && !ref.current.contains(e.target)) {
           setOpen(false);
@@ -83,7 +74,6 @@ const Sidebar = (props) => {
                         </a>
                     </LogoBox>
                 </div>
-                { create ? <Create onCreate={OnCreate} onPostInfo={OnPostInfo} /> : <></> }
                 <ul>
                     {menu}
                 </ul>
