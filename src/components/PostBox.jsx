@@ -1,17 +1,22 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
+import SimpleImageSlider from "react-simple-image-slider";
 //아이콘
 import { CgProfile, CgMoreAlt } from 'react-icons/cg'
 
 const PostBox = (props) => {
 
+    const bodyRef = useRef()
+
     const id = props.user.state.id
     const file = props.postInfo;
-    
+    const a = file.map(file=>file.preview)
     file?.map(file => Object.assign(file, {
         preview: URL.createObjectURL(file)
     }))
 
+
+/*     
     const thumbs = file?.map((file,index) => (
         <Thumb  key={index}>
             <ThumbInner>
@@ -22,11 +27,12 @@ const PostBox = (props) => {
                 />
             </ThumbInner>
         </Thumb >
-      ));
+    )); 
+*/
 
     return(
         <>
-            <PostLayout>
+            <PostLayout ref={bodyRef}>
                 <Post>
                     <PostHeader>
                         <PostProfile>
@@ -34,14 +40,25 @@ const PostBox = (props) => {
                             <div className='name'>{id}</div>
                         </PostProfile>
                         <Option>    
-                            <CgMoreAlt className='icon'/>
+                            <CgMoreAlt className='icon' 
+                            onClick={()=>{props.onClick(props.index)}}/>
                         </Option>
                     </PostHeader>    
-                    <PostImgRaping>
-                        <PostImgList>
+                    <PostImgRaping >
+                        <SimpleImageSlider
+                         width={470}
+                         height={470}
+                         images={a}
+                         showBullets={true}
+                         showNavs={true}/>
+                       {/*  <PostImgList>
                             {thumbs}
-                        </PostImgList>
+                        </PostImgList> */}
                     </PostImgRaping>
+                    <p>
+                        {props.PostText}
+
+                    </p>
                 </Post>
             </PostLayout>
         </>
@@ -57,6 +74,7 @@ const PostLayout = styled.div`
     border-radius: 8px;
     background: #ffffff;
     height: 500px;
+    
 `;
 
 const Post = styled.div`
@@ -97,12 +115,12 @@ const PostImgRaping = styled.div`
     overflow: hidden;
 `;
 
-const PostImgList = styled.ul`
+/* const PostImgList = styled.ul`
     display: flex;
-    
 `;
 
 const Thumb = styled.li`
+    position: absolute;
     display: inline-flex;
     justify-content: center;
     border-Radius: 2px;
@@ -126,7 +144,7 @@ const PostImg = styled.img`
     display: block;
     width: auto;
     height: 100%;
-`; 
+`;  */
 
 
 
