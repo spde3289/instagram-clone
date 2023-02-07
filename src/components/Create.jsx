@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {useDropzone} from 'react-dropzone'
 import styled from "styled-components";
 
@@ -7,6 +7,7 @@ import { HiXMark } from 'react-icons/hi2'
 const Previews = (props) => {
   
     const [files, setFiles] = useState([]);
+    const [text, setText] = useState('');
     const {
         getRootProps, 
         getInputProps} = useDropzone({
@@ -27,15 +28,13 @@ const Previews = (props) => {
                 if(addFile){
                     setFiles(acceptedFiles.map(file => Object.assign(file, {
                         preview: URL.createObjectURL(file)
-                    })));
-                    
-                }else if(files.length < 10){
+                })))}else if(files.length < 10){
                     setFiles(newFiles);
                 }else alert('이미지가 10개를 초과 했습니다.');
             }
         });
 
-    const thumbs = [...files].map(file => (
+    const thumbs = [...files].map((file) => (
       <Thumb key={file.name}>
         <ThumbInner>
           <PostImg
@@ -45,7 +44,6 @@ const Previews = (props) => {
             onClick={(e)=>{
                 const deletimg = files.filter(file => file.preview !== e.target.src );
                 setFiles(deletimg);
-                
             }}
           />
         </ThumbInner>
@@ -56,25 +54,41 @@ const Previews = (props) => {
       <section className="container">
         <ImgInput {...getRootProps({className: 'dropzone'})}>
           <input {...getInputProps()} />
-          <p>Drag 'n' drop some files here, or click to select files</p>
+          <p>이미지를 여기에 올려주세요</p>
         </ImgInput>
         <ThumbsContainer>
           {thumbs}
         </ThumbsContainer>
+        <input type="text" value={text} onChange={(e)=>{
+            setText(e.target.value)
+            
+        }}/>
         <Button onClick={(e)=>{
-            props.onPostInfo(files);
-            props.onCreate();
             e.preventDefault();
+            if( files.length === 0 ){
+                alert('이미지를 넣어주세요')
+            }else{
+                props.onPostInfo(files);
+                props.onPostText(text)
+                props.onPopUp();
+            }
         }}>dasdasd</Button>
       </section>
     );
 }
   
 const Create = (props) => {
+
+    useEffect(() => {
+        document.body.style= `overflow: hidden`;
+        return () => document.body.style = `overflow: auto`
+    }, [])
+      
+
     return(
         <CreateLayout>
             <HiXMark className="icon" onClick={()=>{
-                props.onCreate();
+                props.onPopUp();
             }}/>
             <CreateBox>
                 <Flexbox>
@@ -82,7 +96,10 @@ const Create = (props) => {
                         새 게시물 만들기
                     </CreateHeader>
                     <CreateBody>
-                        <Previews onPostInfo={props.onPostInfo} onCreate={props.onCreate} />
+                        <Previews 
+                        onPostInfo={props.onPostInfo} 
+                        onPopUp={props.onPopUp} 
+                        onPostText={props.onPostText}/>
                     </CreateBody>
                 </Flexbox>
             </CreateBox>
@@ -91,11 +108,13 @@ const Create = (props) => {
 };
 
 const CreateLayout = styled.div`
-    position: absolute;
+    position: fixed;
+    z-index: 10;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
+    
     background-color: rgba(0, 0, 0, .5);
     .icon{
         position: absolute;
