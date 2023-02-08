@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import SimpleImageSlider from "react-simple-image-slider";
 //아이콘
@@ -10,11 +10,15 @@ const PostBox = (props) => {
 
     const id = props.user.state.id
     const file = props.postInfo;
+    const index = props.index
     const a = file.map(file=>file.preview)
     file?.map(file => Object.assign(file, {
         preview: URL.createObjectURL(file)
     }))
 
+    useEffect(()=>{
+        return ( URL.revokeObjectURL(file.preview))
+    })
 
 /*     
     const thumbs = file?.map((file,index) => (
@@ -41,7 +45,7 @@ const PostBox = (props) => {
                         </PostProfile>
                         <Option>    
                             <CgMoreAlt className='icon' 
-                            onClick={()=>{props.onClick(props.index)}}/>
+                            onClick={()=>{props.onClick(index)}}/>
                         </Option>
                     </PostHeader>    
                     <PostImgRaping >
@@ -49,15 +53,12 @@ const PostBox = (props) => {
                          width={470}
                          height={470}
                          images={a}
+                         onLoad={() => { URL.revokeObjectURL(file.preview) }}
                          showBullets={true}
                          showNavs={true}/>
-                       {/*  <PostImgList>
-                            {thumbs}
-                        </PostImgList> */}
                     </PostImgRaping>
                     <p>
                         {props.PostText}
-
                     </p>
                 </Post>
             </PostLayout>
@@ -72,9 +73,7 @@ const PostLayout = styled.div`
     margin-bottom: 15px;
     border: 1px solid #cccccc;
     border-radius: 8px;
-    background: #ffffff;
-    height: 500px;
-    
+    background: #ffffff;   
 `;
 
 const Post = styled.div`
@@ -91,7 +90,6 @@ const PostHeader = styled.div`
 const PostProfile = styled.div`
     display: flex;
     align-items: center;
-    
     .icon{
         width: 32px;
         height: 32px;
@@ -114,38 +112,5 @@ const PostImgRaping = styled.div`
     width: 470px;
     overflow: hidden;
 `;
-
-/* const PostImgList = styled.ul`
-    display: flex;
-`;
-
-const Thumb = styled.li`
-    position: absolute;
-    display: inline-flex;
-    justify-content: center;
-    border-Radius: 2px;
-    border: 1px solid #eaeaea;
-    margin-Bottom: 8px;
-    margin-Right: 8px;
-    width: 470px;
-    height: 470px;
-    padding: 4px;
-    box-Sizing: border-box;
-`;
-
-const ThumbInner = styled.div`
-    display: flex;
-    justify-content: center;
-    width: 470px;
-    overflow: hidden;
-`;
-
-const PostImg = styled.img`
-    display: block;
-    width: auto;
-    height: 100%;
-`;  */
-
-
 
 export default PostBox;
