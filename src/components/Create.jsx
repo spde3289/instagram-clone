@@ -51,15 +51,16 @@ const Previews = (props) => {
     ));
 
     return (
-      <section className="container">
-        <ImgInput {...getRootProps({className: 'dropzone'})}>
-          <input {...getInputProps()} />
-          <p>이미지를 여기에 올려주세요</p>
+      <Section>
+        <ImgInput {...getRootProps()} >
+            <input {...getInputProps()} />
+            <p>이미지를 여기에 올려주세요</p>
+            <ThumbsContainer>
+                {thumbs}
+            </ThumbsContainer>
         </ImgInput>
-        <ThumbsContainer>
-          {thumbs}
-        </ThumbsContainer>
-        <input type="text" value={text} onChange={(e)=>{
+        <div>
+        <Textinput type="text" placeholder="문구 입력..." value={text} onChange={(e)=>{
             setText(e.target.value)
             
         }}/>
@@ -72,8 +73,9 @@ const Previews = (props) => {
                 props.onPostText(text)
                 props.onPopUp();
             }
-        }}>dasdasd</Button>
-      </section>
+        }}>제출</Button>
+        </div>
+      </Section>
     );
 }
   
@@ -114,7 +116,6 @@ const CreateLayout = styled.div`
     left: 0;
     width: 100%;
     height: 100%;
-    
     background-color: rgba(0, 0, 0, .5);
     .icon{
         position: absolute;
@@ -124,6 +125,7 @@ const CreateLayout = styled.div`
         height: 30px;
         color: #fff;
     }
+    
 `;
 
 const CreateBox = styled.div`
@@ -150,17 +152,25 @@ const CreateHeader = styled.div`
 
 const CreateBody = styled.div`
     margin: 40px 40px;
-    height: 670px;
 `;
+
+const Section = styled.section`
+    display: flex;
+`;
+
 
 const ImgInput = styled.div`
     border: 2px dashed #cccccc;
-    height: 100px;
-    width: 100%;
+    padding: 5px;
+    //height: 300px;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
 `;
 
 const ThumbsContainer = styled.aside`
     display: flex;
+    justify-content: space-between;
     flex-Direction: row;
     flex-Wrap: wrap;
     margin-Top: 16px;
@@ -196,5 +206,10 @@ const Button = styled.button`
     height: 30px;
 `;
 
+const Textinput = styled.input`
+    border: none;
+    width: 200px;
+    height: 300px;
+`;
 
 export default Create;
