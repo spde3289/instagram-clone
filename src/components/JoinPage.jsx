@@ -65,17 +65,27 @@ const JoinPage = (props) => {
     };
 
     const onSubmit = (e) => {
-        getUser()
-        const idOverlap = account.findIndex(user=>(user.id === e.target.id.value))
-        if(idOverlap !== -1){
-            return alert('중복된 아이디입니다.');
+
+        if(pattern.test(Id)){
+            getUser()
+            const idOverlap = account.findIndex(user=>(user.id === e.target.id.value))
+            if(idOverlap !== -1){
+                return alert('중복된 아이디입니다.');
+            }
+            if(Password !== passwordCheck){
+                return alert('비밀번호와 비밀번호 확인이 같지 않습니다.');
+            };
+            AddUserInfo(e);
+        }else{
+            alert('다시입력')
+            setId('')
         }
-        if(Password !== passwordCheck){
-            return alert('비밀번호와 비밀번호 확인이 같지 않습니다.');
-        };
-        AddUserInfo(e);
+
+       
     };
     
+    const pattern = new RegExp("^[a-zA-Z][0-9a-zA-Z]{4,7}$");
+
     return(
         <JoinBox>
             <MdOutlineCancel className="icon" 
