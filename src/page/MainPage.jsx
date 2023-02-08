@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 //import axios from "axios";
 import styled from 'styled-components';
 import { useLocation } from 'react-router';
@@ -27,21 +27,26 @@ const MainPage = () => {
         a.push(text);
         setPostTextList(a);
     };  
-    console.log(postTextList);
+
     const OnPopUp = () => {
         SetOnPopUp(!onPopUp);
     };
 
     const OnClick = (e) => {
-        const a = [...postInfoList].splice(e, 1);
-        setpostInfoList(a)
-        console.log(postInfoList,e)
-    }
+        console.log(e)
+        const a = [...postInfoList];
+        const b = [...postTextList];
+        a.splice(e, 1);
+        b.splice(e, 1);
+        setpostInfoList(a);
+        setPostTextList(b);
+    };
 
-    console.log(postInfoList);
-    
+    useEffect(()=>{
+        
+    },[])
     const postList = [];
-
+    
     for(let i = 0; i < postInfoList.length; i++) {
         postList.push(
             <PostBox 
@@ -53,6 +58,7 @@ const MainPage = () => {
             index={i}/>
         )
     }
+
 
 /*     const postList = postInfoList?.map((info, index)=> (
         <PostBox 
@@ -73,7 +79,7 @@ const MainPage = () => {
                 <Create onPopUp={OnPopUp} 
                 onPostInfo={OnPostInfo} 
                 onPostText={OnPostText}/> : <></> }
-                { postInfoList.length ? postList : <></> }
+                { postInfoList.length ? postList.reverse() : <></> }
             </Main>
         </Layout>
     );
@@ -82,14 +88,12 @@ const MainPage = () => {
 const Layout = styled.div`
     display: flex;
     height: 100%;
-    
 `;
 
 const Main = styled.main`
     display: flex;
     flex-direction: column;
     margin: 0 auto;
-    overflow: hidden;
 `;
 
 export default MainPage
