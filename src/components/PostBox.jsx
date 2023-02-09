@@ -20,24 +20,22 @@ const PostBox = (props) => {
         return ( URL.revokeObjectURL(file.preview))
     })
 
-    useEffect(() => {
+/*     useEffect(() => {
         // Make sure to revoke the data uris to avoid memory leaks, will run on unmount
         return () => file.forEach(file => URL.revokeObjectURL(file.preview));
-      }, [file]);
+      }, [file]); */
 
-/*     
+    
     const thumbs = file?.map((file,index) => (
-        <Thumb  key={index}>
-            <ThumbInner>
-                <PostImg
+            <div key={index}>
+                <img
                     src={file.preview}
                     alt={file.name}
                     onLoad={() => { URL.revokeObjectURL(file.preview) }}
                 />
-            </ThumbInner>
-        </Thumb >
+            </div>
     )); 
-*/
+
 
     return(
         <>
@@ -54,13 +52,14 @@ const PostBox = (props) => {
                         </Option>
                     </PostHeader>    
                     <PostImgRaping >
-                        <SimpleImageSlider
+                        {thumbs}
+                        {/* <SimpleImageSlider
                          width={470}
                          height={470}
                          images={a}
                          onLoad={() => { URL.revokeObjectURL(file.preview); console.log('asd') }}
                          showBullets={true}
-                         showNavs={true}/>
+                         showNavs={true}/> */}
                     </PostImgRaping>
                     <p>
                         {props.PostText}
