@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 //import axios from "axios";
 import styled from 'styled-components';
 import { useLocation } from 'react-router';
@@ -32,19 +32,16 @@ const MainPage = () => {
         SetOnPopUp(!onPopUp);
     };
 
-    const OnClick = (e) => {
-        console.log(e)
+    const OnClick = (index) => {
+        console.log(index)
         const a = [...postInfoList];
         const b = [...postTextList];
-        a.splice(e, 1);
-        b.splice(e, 1);
+        a.splice(index, 1);
+        b.splice(index, 1);
         setpostInfoList(a);
-        setPostTextList(b);
+        setPostTextList(b); 
     };
 
-    useEffect(()=>{
-        
-    },[])
     const postList = [];
     
     for(let i = 0; i < postInfoList.length; i++) {
