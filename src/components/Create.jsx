@@ -19,6 +19,9 @@ const Previews = (props) => {
                 const maxFiles = fileRejections.length === 0;
                 const addFile = files.length === 0 ;
                 const newFiles = [...files];
+                console.log(acceptedFiles.length)
+                console.log(newFiles.length)
+                console.log(newFiles.length + acceptedFiles.length < 10)
                 newFiles.push(...acceptedFiles.map(file => Object.assign(file, {
                         preview: URL.createObjectURL(file)
                 })));
@@ -28,23 +31,27 @@ const Previews = (props) => {
                 if(addFile){
                     setFiles(acceptedFiles.map(file => Object.assign(file, {
                         preview: URL.createObjectURL(file)
-                })))}else if(files.length < 10){
+                })))}else if(newFiles.length + acceptedFiles.length <= 11){
                     setFiles(newFiles);
                 }else alert('이미지가 10개를 초과 했습니다.');
             }
         });
 
+    const deletimg = (e) => {
+        console.log(e.target)
+        const deletimg = files.filter(file => file.preview !== e.target.src );
+        setFiles(deletimg);
+    }
+
     const thumbs = [...files].map((file) => (
       <Thumb key={file.name}>
-        <ThumbInner>
+        <ThumbInner onClick={(e) => {
+                deletimg(e);
+            }}>
           <PostImg
             src={file.preview}
             alt={file.name}
-            onLoad={() => { URL.revokeObjectURL(file.preview); }}
-            onClick={(e)=>{
-                const deletimg = files.filter(file => file.preview !== e.target.src );
-                setFiles(deletimg);
-            }}
+            onLoad={() => {URL.revokeObjectURL(file.preview)}}
           />
         </ThumbInner>
       </Thumb>
@@ -52,8 +59,9 @@ const Previews = (props) => {
 
     return (
       <Section>
-        <ImgInput {...getRootProps()} >
-            <input {...getInputProps()} />
+        <ImgInput {...getRootProps()} 
+        onClick={e=>{e.preventDefault()}}>
+            <input {...getInputProps()}/>
             <p>이미지를 여기에 올려주세요</p>
             <ThumbsContainer>
                 {thumbs}
@@ -111,7 +119,7 @@ const Create = (props) => {
 
 const CreateLayout = styled.div`
     position: fixed;
-    z-index: 10;
+    z-index: 20;
     top: 0;
     left: 0;
     width: 100%;
@@ -181,8 +189,7 @@ const Thumb = styled.div`
     justify-content: center;
     border-Radius: 2px;
     border: 1px solid #eaeaea;
-    margin-Bottom: 8px;
-    margin-Right: 8px;
+    margin: 8px;
     width: 100px;
     height: 100px;
     padding: 4px;

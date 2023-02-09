@@ -1,6 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import SimpleImageSlider from "react-simple-image-slider";
+import { Slide } from 'react-slideshow-image';
+import 'react-slideshow-image/dist/styles.css';
+//import SimpleImageSlider from "react-simple-image-slider";
 //아이콘
 import { CgProfile, CgMoreAlt } from 'react-icons/cg'
 
@@ -11,14 +13,20 @@ const PostBox = (props) => {
     const id = props.user.state.id
     const file = props.postInfo;
     const index = props.index
-    const a = file.map(file=>file.preview)
+    //const a = file.map(file=>file.preview)
     file?.map(file => Object.assign(file, {
         preview: URL.createObjectURL(file)
     }))
 
-    useEffect(()=>{
-        return ( URL.revokeObjectURL(file.preview))
-    })
+    const properties = {
+        duration: 5000,
+        transitionDuration: 500,
+        infinite: false,
+        indicators: true,
+        arrows: true,
+    }
+
+    
 
 /*     useEffect(() => {
         // Make sure to revoke the data uris to avoid memory leaks, will run on unmount
@@ -27,13 +35,13 @@ const PostBox = (props) => {
 
     
     const thumbs = file?.map((file,index) => (
-            <div key={index}>
+            <EachSlide key={index}>
                 <img
                     src={file.preview}
                     alt={file.name}
                     onLoad={() => { URL.revokeObjectURL(file.preview) }}
                 />
-            </div>
+            </EachSlide>
     )); 
 
 
@@ -52,7 +60,12 @@ const PostBox = (props) => {
                         </Option>
                     </PostHeader>    
                     <PostImgRaping >
-                        {thumbs}
+                        <Slide {...properties}>
+                            
+                                {thumbs}
+                            
+                        </Slide>
+
                         {/* <SimpleImageSlider
                          width={470}
                          height={470}
@@ -116,5 +129,21 @@ const PostImgRaping = styled.div`
     width: 470px;
     overflow: hidden;
 `;
+
+const Box = styled.div`
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`;
+
+const EachSlide = styled.div`
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+
 
 export default PostBox;
