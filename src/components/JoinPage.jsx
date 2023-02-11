@@ -63,8 +63,8 @@ const JoinPage = (props) => {
     const onChangePasswordCheck = (e) => {
         setPasswordCheck(e.target.value)
     };
-
     const onSubmit = (e) => {
+        console.log(pattern.test(Id))
 
         if(pattern.test(Id)){
             getUser()
@@ -84,7 +84,7 @@ const JoinPage = (props) => {
        
     };
     
-    const pattern = new RegExp("^[a-zA-Z][0-9a-zA-Z]{4,7}$");
+    const pattern = new RegExp("^[a-zA-Z][0-9a-zA-Z]{4,15}$");
 
     return(
         <JoinBox>
