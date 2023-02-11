@@ -11,7 +11,7 @@ const Previews = (props) => {
     const {
         getRootProps, 
         getInputProps} = useDropzone({
-            maxFiles:10,
+            maxFiles:9,
             accept: {
                 'image/*': []
             },
@@ -19,21 +19,24 @@ const Previews = (props) => {
                 const maxFiles = fileRejections.length === 0;
                 const addFile = files.length === 0 ;
                 const newFiles = [...files];
-                console.log(acceptedFiles.length)
-                console.log(newFiles.length)
-                console.log(newFiles.length + acceptedFiles.length < 10)
+                console.log(acceptedFiles, files)
+                const a = acceptedFiles.reduce((acc, cur) => {
+                    console.log(acc, cur);
+                })
+                console.log(a)
+
                 newFiles.push(...acceptedFiles.map(file => Object.assign(file, {
                         preview: URL.createObjectURL(file)
                 })));
                 
-                if(!maxFiles) alert('이미지를 10개만 업로드 할 수 있습니다');
+                if(!maxFiles) alert('이미지는 9개까지 업로드 할 수 있습니다.');
 
                 if(addFile){
                     setFiles(acceptedFiles.map(file => Object.assign(file, {
                         preview: URL.createObjectURL(file)
-                })))}else if(newFiles.length + acceptedFiles.length <= 11){
+                })))}else if(files.length + acceptedFiles.length < 10){
                     setFiles(newFiles);
-                }else alert('이미지가 10개를 초과 했습니다.');
+                }else alert('이미지는 9개까지 업로드 할 수 있습니다.')
             }
         });
 
@@ -68,14 +71,15 @@ const Previews = (props) => {
             </ThumbsContainer>
         </ImgInput>
         <div>
-        <Textinput type="text" placeholder="문구 입력..." value={text} onChange={(e)=>{
+        <Textinput placeholder="문구 입력..." value={text} onChange={(e)=>{
             setText(e.target.value)
-            
         }}/>
         <Button onClick={(e)=>{
             e.preventDefault();
             if( files.length === 0 ){
                 alert('이미지를 넣어주세요')
+            }else if(text.length === 0){
+                alert('텍스트를 입력해주세요')
             }else{
                 props.onPostInfo(files);
                 props.onPostText(text)
@@ -170,15 +174,15 @@ const Section = styled.section`
 const ImgInput = styled.div`
     border: 2px dashed #cccccc;
     padding: 5px;
-    //height: 300px;
     width: 400px;
+    height: 385px;
     display: flex;
     flex-direction: column;
 `;
 
 const ThumbsContainer = styled.aside`
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     flex-Direction: row;
     flex-Wrap: wrap;
     margin-Top: 16px;
@@ -213,10 +217,11 @@ const Button = styled.button`
     height: 30px;
 `;
 
-const Textinput = styled.input`
+const Textinput = styled.textarea`
     border: none;
     width: 200px;
-    height: 300px;
+    height: 360px;
+    font-size: 16px;
 `;
 
 export default Create;
