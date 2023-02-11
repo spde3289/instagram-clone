@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css';
@@ -61,9 +61,7 @@ const PostBox = (props) => {
                     </PostHeader>    
                     <PostImgRaping >
                         <Slide {...properties}>
-                            
-                                {thumbs}
-                            
+                            {thumbs}
                         </Slide>
 
                         {/* <SimpleImageSlider
@@ -130,12 +128,12 @@ const PostImgRaping = styled.div`
     overflow: hidden;
 `;
 
-const Box = styled.div`
+/* const Box = styled.div`
     height: 400px;
     display: flex;
     align-items: center;
     justify-content: center;
-`;
+`; */
 
 const EachSlide = styled.div`
   height: 500px;
