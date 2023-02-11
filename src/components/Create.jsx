@@ -19,24 +19,21 @@ const Previews = (props) => {
                 const maxFiles = fileRejections.length === 0;
                 const addFile = files.length === 0 ;
                 const newFiles = [...files];
-                console.log(acceptedFiles, files)
-                const a = acceptedFiles.reduce((acc, cur) => {
-                    console.log(acc, cur);
-                })
-                console.log(a)
-
+                const hasDuplicates = acceptedFiles.some(acc => files.some(files => acc.name === files.name));
+                
                 newFiles.push(...acceptedFiles.map(file => Object.assign(file, {
                         preview: URL.createObjectURL(file)
                 })));
-                
+            
                 if(!maxFiles) alert('이미지는 9개까지 업로드 할 수 있습니다.');
-
-                if(addFile){
-                    setFiles(acceptedFiles.map(file => Object.assign(file, {
-                        preview: URL.createObjectURL(file)
-                })))}else if(files.length + acceptedFiles.length < 10){
-                    setFiles(newFiles);
-                }else alert('이미지는 9개까지 업로드 할 수 있습니다.')
+                if(!hasDuplicates){
+                    if(addFile){
+                        setFiles(acceptedFiles.map(file => Object.assign(file, {
+                            preview: URL.createObjectURL(file)
+                    })))}else if(files.length + acceptedFiles.length < 10){
+                        setFiles(newFiles);
+                    }else alert('이미지는 9개까지 업로드 할 수 있습니다.')
+                }else alert('중복되는 이미지는 업로드 할 수 없습니다.')
             }
         });
 
@@ -85,7 +82,7 @@ const Previews = (props) => {
                 props.onPostText(text)
                 props.onPopUp();
             }
-        }}>제출</Button>
+        }}>만들기</Button>
         </div>
       </Section>
     );
@@ -215,12 +212,18 @@ const PostImg = styled.img`
 const Button = styled.button`
     width: 100px;
     height: 30px;
+    margin-top: 15px;
+    border-radius: 6px;
+    border: 1px solid #0095f6;
+    background-color: #ffff;
+    color: #0095f6;
+    font-size: 14px;
 `;
 
 const Textinput = styled.textarea`
     border: none;
     width: 200px;
-    height: 360px;
+    height: 345px;
     font-size: 16px;
 `;
 
