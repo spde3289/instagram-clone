@@ -2,7 +2,6 @@ import React, { useRef } from 'react';
 import styled from 'styled-components';
 import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css';
-//import SimpleImageSlider from "react-simple-image-slider";
 //아이콘
 import { CgProfile, CgMoreAlt } from 'react-icons/cg'
 
@@ -13,7 +12,6 @@ const PostBox = (props) => {
     const id = props.user.state.id
     const file = props.postInfo;
     const index = props.index
-    //const a = file.map(file=>file.preview)
     file?.map(file => Object.assign(file, {
         preview: URL.createObjectURL(file)
     }))
@@ -26,14 +24,6 @@ const PostBox = (props) => {
         arrows: true,
     }
 
-    
-
-/*     useEffect(() => {
-        // Make sure to revoke the data uris to avoid memory leaks, will run on unmount
-        return () => file.forEach(file => URL.revokeObjectURL(file.preview));
-      }, [file]); */
-
-    
     const thumbs = file?.map((file,index) => (
             <EachSlide key={index}>
                 <img
@@ -43,7 +33,6 @@ const PostBox = (props) => {
                 />
             </EachSlide>
     )); 
-
 
     return(
         <>
@@ -63,14 +52,6 @@ const PostBox = (props) => {
                         <Slide {...properties}>
                             {thumbs}
                         </Slide>
-
-                        {/* <SimpleImageSlider
-                         width={470}
-                         height={470}
-                         images={a}
-                         onLoad={() => { URL.revokeObjectURL(file.preview); console.log('asd') }}
-                         showBullets={true}
-                         showNavs={true}/> */}
                     </PostImgRaping>
                     <p>
                         {props.PostText}
@@ -109,9 +90,6 @@ const PostProfile = styled.div`
         width: 32px;
         height: 32px;
         margin: 10px;
-    }
-    .name{
-
     }
 `;
 
