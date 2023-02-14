@@ -64,28 +64,44 @@ const JoinPage = (props) => {
         setPasswordCheck(e.target.value)
     };
     const onSubmit = (e) => {
-        console.log(pattern.test(Id))
+        console.log(idVal.test(Id) , nameVal.test(Name) , passwordVal.test(Password) , !passwordCheckVal)
 
-        if(pattern.test(Id)){
+        if(idVal.test(Id) & nameVal.test(Name) & passwordVal.test(Password) & !passwordCheckVal ){
             getUser()
             const idOverlap = account.findIndex(user=>(user.id === e.target.id.value))
             if(idOverlap !== -1){
+                setId('');
                 return alert('중복된 아이디입니다.');
             }
-            if(Password !== passwordCheck){
-                return alert('비밀번호와 비밀번호 확인이 같지 않습니다.');
-            };
             AddUserInfo(e);
         }else{
-            alert('다시입력')
-            setId('')
+            if(!idVal.test(Id)){
+                setId('');
+                alert('영문, 숫자를 섞어서 6자 이상 20자 이하로 작성해주세요')
+            }
+            if(!nameVal.test(Name)){
+                setName('');
+                alert('이름을 한글로 작성해주세요')
+            }
+            if(!passwordVal.test(Password)){
+                setPassword('');
+                setPasswordCheck('');
+                alert('영문, 숫자를 섞어서 6자 이상 20자 이하로 작성해주세요')
+            }
+            if(passwordCheckVal){
+                setPasswordCheck('');
+                alert('비밀번호가 일치하지 않습니다.')
+            }
         }
 
        
     };
     
-    const pattern = new RegExp("^[a-zA-Z][0-9a-zA-Z]{4,15}$");
-
+    const idVal = new RegExp("^[a-zA-Z][0-9a-zA-Z]{5,19}$");
+    const nameVal = new RegExp("^[ㄱ-ㅎ|가-힣]+$");
+    const passwordVal = new RegExp("^[a-zA-Z][0-9a-zA-Z]{5,19}$");
+    const passwordCheckVal = Password !== passwordCheck;
+    
     return(
         <JoinBox>
             <MdOutlineCancel className="icon" 
@@ -99,31 +115,43 @@ const JoinPage = (props) => {
             }}>
                 <div className='flexBox'>
                     아이디
-                    <JoinInput type='id' name='id' 
+                    <JoinInput type='id' name='id' className='id' value={Id}
                     onChange={(e)=>{
                         onChangeId(e);
                     }}/>
+                    { !idVal.test(Id) ? 
+                    <Validations>영문, 숫자를 섞어서 6자 이상 20자 이하</Validations>
+                    : <></> }
                 </div>
                 <div className='flexBox'>
                     이름
-                    <JoinInput type='name' name='name'
+                    <JoinInput type='name' name='name' value={Name}
                     onChange={(e)=>{
                         onChangeName(e);
                     }}/>
+                    { !nameVal.test(Name) ?
+                    <Validations>한글로 작성해주세요</Validations>
+                    : <></> }
                 </div>
                 <div className='flexBox'>
                     비밀번호
-                    <JoinInput type='password' name='password' autoComplete="on"
+                    <JoinInput type='password' name='password' autoComplete="on" value={Password}
                     onChange={(e)=>{
                         onChangePassword(e);
                     }}/>
+                    { !passwordVal.test(Password) ?
+                    <Validations>영문, 숫자를 섞어서 6자 이상 20자 이하</Validations>
+                    : <></> }
                 </div>
                 <div className='flexBox'>
                     비밀번호 확인
-                    <JoinInput type='password' name='password' autoComplete="on"
+                    <JoinInput type='password' name='password' autoComplete="on" value={passwordCheck}
                     onChange={(e)=>{
                         onChangePasswordCheck(e);
                     }}/>
+                    { passwordCheckVal ?
+                    <Validations>비밀번호가 일치하지 않습니다.</Validations>
+                    : <></> }
                 </div>
                 <div className='flexBox'>
                     <Submit type='submit' name='submit' value='회원가입'/>
@@ -163,6 +191,7 @@ const Join = styled.form`
     flex-direction: column;
     margin: 20px 15px;
     .flexBox{
+        position: relative;
         display: flex;
         flex-direction: column;
         padding-bottom: 23px;
@@ -175,6 +204,12 @@ const JoinInput = styled.input`
     border-radius: 5px;
     padding: 9px 0 7px 8px;
     outline: none;
+`;
+
+const Validations = styled.div`
+    position: absolute;
+    bottom: 6px;
+    font-size: 13px;
 `;
 
 const Submit = styled.input`
