@@ -63,10 +63,10 @@ const PostBox = (props) => {
                             onClick={()=>{
                                 setPostMenu(!postMenu)
                             }}/>
-                        </Option>
                         { postMenu ? 
                         <PostPopUp onClick={()=>{props.onClick(index)}}>게시물 삭제</PostPopUp> 
                         : <></>}
+                        </Option>
                     </PostHeader>
                     <PostImgRaping >
                         <Slide {...properties}>
@@ -126,6 +126,7 @@ const PostPopUp = styled.div`
     width: 105px;
     padding: 12px 7px;
     text-align: center;
+    z-index: 11;
 `;
 
 const Option = styled.div`
@@ -142,12 +143,12 @@ const PostImgRaping = styled.div`
 `;
 
 const EachSlide = styled.div`
-  height: 500px;
-  width: auto;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    height: 500px;
+    width: auto;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 `;
 
 const CmncBox = styled.div`
