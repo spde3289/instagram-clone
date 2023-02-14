@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css';
@@ -7,14 +7,16 @@ import { CgProfile, CgMoreAlt } from 'react-icons/cg'
 
 const PostBox = (props) => {
 
+    const [postMenu, setPostMenu] = useState(false);
     const bodyRef = useRef()
+    const popUpRef = useRef();
 
-    const id = props.user.state.id
+    const id = props.user.state.id;
     const file = props.postInfo;
-    const index = props.index
+    const index = props.index;
     file?.map(file => Object.assign(file, {
         preview: URL.createObjectURL(file)
-    }))
+    }));
 
     const properties = {
         duration: 5000,
@@ -22,16 +24,29 @@ const PostBox = (props) => {
         infinite: false,
         indicators: true,
         arrows: true,
-    }
+        autoplay: false,
+    };
+
+    const handleClickOutSide = (e) => {
+        if (postMenu && !popUpRef.current.contains(e.target)) {
+          setPostMenu(false);
+        };
+    };
+    
+    useEffect(() => {
+        if (postMenu) document.addEventListener('mousedown', handleClickOutSide);
+        return () => {
+          document.removeEventListener('mousedown', handleClickOutSide);
+        };
+    });
 
     const thumbs = file?.map((file,index) => (
-            <EachSlide key={index}>
-                <img
-                    src={file.preview}
-                    alt={file.name}
-                    onLoad={() => { URL.revokeObjectURL(file.preview) }}
-                />
-            </EachSlide>
+        <EachSlide key={index}>
+            <img
+                src={file.preview}
+                alt={file.name}
+                onLoad={() => { URL.revokeObjectURL(file.preview) }}/>
+        </EachSlide>
     )); 
 
     return(
@@ -43,19 +58,26 @@ const PostBox = (props) => {
                             <CgProfile className='icon'/>
                             <div className='name'>{id}</div>
                         </PostProfile>
-                        <Option>    
+                        <Option ref={popUpRef}>    
                             <CgMoreAlt className='icon' 
-                            onClick={()=>{props.onClick(index)}}/>
+                            onClick={()=>{
+                                setPostMenu(!postMenu)
+                            }}/>
                         </Option>
-                    </PostHeader>    
+                        { postMenu ? 
+                        <PostPopUp onClick={()=>{props.onClick(index)}}>게시물 삭제</PostPopUp> 
+                        : <></>}
+                    </PostHeader>
                     <PostImgRaping >
                         <Slide {...properties}>
                             {thumbs}
                         </Slide>
                     </PostImgRaping>
-                    <p>
-                        {props.PostText}
-                    </p>
+                    <CmncBox>
+                        <TextBox>
+                            {props.PostText}
+                        </TextBox>
+                    </CmncBox>
                 </Post>
             </PostLayout>
         </>
@@ -63,6 +85,7 @@ const PostBox = (props) => {
 };
 
 const PostLayout = styled.div`
+    position: relative;
     width: 470px;
     padding: 16px 0;
     margin-top: 27px;
@@ -93,6 +116,18 @@ const PostProfile = styled.div`
     }
 `;
 
+const PostPopUp = styled.div`
+    position: absolute;
+    top: 50px;
+    right: -30px;
+    border: 1px solid #cccccc;
+    border-radius: 3px;
+    background-color: white;
+    width: 105px;
+    padding: 12px 7px;
+    text-align: center;
+`;
+
 const Option = styled.div`
     .icon{
         padding: 8px;
@@ -106,20 +141,23 @@ const PostImgRaping = styled.div`
     overflow: hidden;
 `;
 
-/* const Box = styled.div`
-    height: 400px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-`; */
-
 const EachSlide = styled.div`
   height: 500px;
+  width: auto;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
 `;
 
+const CmncBox = styled.div`
+    padding: 8px;
+`;
+
+const TextBox = styled.p`
+    width: 100%;
+    word-break:break-all;
+`;
 
 
 export default PostBox;

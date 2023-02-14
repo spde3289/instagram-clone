@@ -15,7 +15,6 @@ const MoreSubMenuPopUp = () => {
     const navigate = useNavigate();
 
     const onClickHandler = () => {
-        console.log('a');
         navigate('/');
     };
 

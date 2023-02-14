@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {useDropzone} from 'react-dropzone'
 import styled from "styled-components";
-
+//아이콘
 import { HiXMark } from 'react-icons/hi2'
 
 const Previews = (props) => {
@@ -39,10 +39,9 @@ const Previews = (props) => {
 
     const deletimg = (e) => {
         console.log(e.target)
-        const deletimg = files.filter(file => file.preview !== e.target.src );
+        const deletimg = files.filter(file => file.preview !== e.target.src);
         setFiles(deletimg);
     }
-
 
     const thumbs = [...files].map((file) => (
       <Thumb key={file.name}>
@@ -70,8 +69,6 @@ const Previews = (props) => {
         </ImgInput>
         <div>
             <Textinput placeholder="문구 입력..." value={text} onChange={(e)=>{
-                console.log(e.target.value.length);
-                console.log(e.target.value);
                 if(e.target.value.length <= 200){
                     setText(e.target.value);
                 };
@@ -101,7 +98,6 @@ const Create = (props) => {
         return () => document.body.style = `overflow: auto`
     }, [])
       
-
     return(
         <CreateLayout>
             <HiXMark className="icon" onClick={()=>{
@@ -139,8 +135,7 @@ const CreateLayout = styled.div`
         width: 30px;
         height: 30px;
         color: #fff;
-    }
-    
+    };
 `;
 
 const CreateBox = styled.div`
@@ -172,7 +167,6 @@ const CreateBody = styled.div`
 const Section = styled.section`
     display: flex;
 `;
-
 
 const ImgInput = styled.div`
     border: 2px dashed #cccccc;
