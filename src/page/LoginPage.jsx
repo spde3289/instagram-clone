@@ -27,9 +27,14 @@ const LoginPage = () => {
             const response = await axios.get('http://localhost:3001/account');
             const user = response.data.find(
                 (users) => users.id === id && users.password === password
-              );
-            if (user === undefined) throw new Error();
-            navigate('/home',{state:user});
+            );
+            if (user === undefined){ 
+                setId('');
+                setPassword('');
+                alert('아이디나 비밀번호가 일치하지 않습니다');
+            }else{
+                navigate('/home', {state:user});
+            }
         } catch (error) {
             console.error(error);
         };
@@ -69,7 +74,7 @@ const LoginPage = () => {
                     <div className="Ass">
                         <MainBox>
                             <Logo>
-                                <div></div>
+                                
                             </Logo>
                             <LoginBox onSubmit={(e)=>{
                                 e.preventDefault();
@@ -84,6 +89,7 @@ const LoginPage = () => {
                                     aria-label='전화번호, 사용자 이름 또는 이메일' 
                                     aria-required='true'
                                     ref={input}
+                                    value={id}
                                     onChange={e=>{
                                         addIdClass(e);
                                     }}/>
@@ -98,6 +104,7 @@ const LoginPage = () => {
                                     type='password'
                                     name='password'
                                     autoComplete="on"
+                                    value={password}
                                     onChange={e=>{
                                         addPasswardClass(e);
                                     }}/>
