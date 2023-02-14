@@ -43,6 +43,7 @@ const Previews = (props) => {
         setFiles(deletimg);
     }
 
+
     const thumbs = [...files].map((file) => (
       <Thumb key={file.name}>
         <ThumbInner onClick={(e) => {
@@ -68,21 +69,26 @@ const Previews = (props) => {
             </ThumbsContainer>
         </ImgInput>
         <div>
-        <Textinput placeholder="문구 입력..." value={text} onChange={(e)=>{
-            setText(e.target.value)
-        }}/>
-        <Button onClick={(e)=>{
-            e.preventDefault();
-            if( files.length === 0 ){
-                alert('이미지를 넣어주세요')
-            }else if(text.length === 0){
-                alert('텍스트를 입력해주세요')
-            }else{
-                props.onPostInfo(files);
-                props.onPostText(text)
-                props.onPopUp();
-            }
-        }}>만들기</Button>
+            <Textinput placeholder="문구 입력..." value={text} onChange={(e)=>{
+                console.log(e.target.value.length);
+                console.log(e.target.value);
+                if(e.target.value.length <= 200){
+                    setText(e.target.value);
+                };
+            }}/>
+            <TextLimit>{text.length}/200 자</TextLimit>
+            <Button onClick={(e)=>{
+                e.preventDefault();
+                if( files.length === 0 ){
+                    alert('이미지를 넣어주세요')
+                }else if(text.length === 0){
+                    alert('텍스트를 입력해주세요')
+                }else{
+                    props.onPostInfo(files);
+                    props.onPostText(text)
+                    props.onPopUp();
+                }
+            }}>만들기</Button>
         </div>
       </Section>
     );
@@ -170,6 +176,7 @@ const Section = styled.section`
 
 const ImgInput = styled.div`
     border: 2px dashed #cccccc;
+    margin-right: 10px;
     padding: 5px;
     width: 400px;
     height: 385px;
@@ -214,17 +221,25 @@ const Button = styled.button`
     height: 30px;
     margin-top: 15px;
     border-radius: 6px;
-    border: 1px solid #0095f6;
+    border: 1px solid #8d7d7d7c;
     background-color: #ffff;
-    color: #0095f6;
+    color: #222222;
     font-size: 14px;
 `;
 
 const Textinput = styled.textarea`
     border: none;
+    margin-bottom: 4px;
     width: 200px;
-    height: 345px;
+    height: 320px;
     font-size: 16px;
+    outline: none;
+    resize: none;
+`;
+
+const TextLimit = styled.div`
+    text-align: right;
+    font-size: 14px;
 `;
 
 export default Create;
