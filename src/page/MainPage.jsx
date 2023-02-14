@@ -33,7 +33,6 @@ const MainPage = () => {
     };
 
     const OnClick = (index) => {
-        console.log(index)
         const a = [...postInfoList];
         const b = [...postTextList];
         a.splice(index, 1);
