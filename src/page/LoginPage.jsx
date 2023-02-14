@@ -24,7 +24,7 @@ const LoginPage = () => {
 
     async function getUser() {
         try {
-            const response = await axios.get('http://localhost:3001/account');
+            const response = await axios.get('https://instargram-clone.herokuapp.com/account');
             const user = response.data.find(
                 (users) => users.id === id && users.password === password
             );
