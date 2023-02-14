@@ -14,9 +14,9 @@ const PostBox = (props) => {
     const id = props.user.state.id;
     const file = props.postInfo;
     const index = props.index;
-    file?.map(file => Object.assign(file, {
+    file.map(file => Object.assign(file, {
         preview: URL.createObjectURL(file)
-    }));
+    })); 
 
     const properties = {
         duration: 5000,
@@ -40,7 +40,7 @@ const PostBox = (props) => {
         };
     });
 
-    const thumbs = file?.map((file,index) => (
+     const thumbs = file.map((file,index) => (
         <EachSlide key={index}>
             <img
                 src={file.preview}
@@ -48,7 +48,7 @@ const PostBox = (props) => {
                 onLoad={() => { URL.revokeObjectURL(file.preview) }}/>
         </EachSlide>
     )); 
-
+ 
     return(
         <>
             <PostLayout ref={bodyRef}>
@@ -70,7 +70,7 @@ const PostBox = (props) => {
                     </PostHeader>
                     <PostImgRaping >
                         <Slide {...properties}>
-                            {thumbs}
+                            {thumbs} 
                         </Slide>
                     </PostImgRaping>
                     <CmncBox>
