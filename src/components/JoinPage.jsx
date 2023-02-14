@@ -18,7 +18,7 @@ const JoinPage = (props) => {
 
     async function getUser() {
         try {
-            const response = await axios.get('http://localhost:3001/account',);
+            const response = await axios.get('https://instargram-clone.herokuapp.com/account',);
             setAccount(response.data)
         } catch (error) {
             console.error(error);
@@ -32,7 +32,7 @@ const JoinPage = (props) => {
     async function postUser() {
         axios({
             method:"POST",
-            url: 'http://localhost:3001/account',
+            url: 'https://instargram-clone.herokuapp.com/account',
             data:{
                 "id" : Id,
                 "password": Password,
