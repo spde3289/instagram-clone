@@ -38,7 +38,6 @@ const Previews = (props) => {
         });
 
     const deletimg = (e) => {
-        console.log(e.target)
         const deletimg = files.filter(file => file.preview !== e.target.src);
         setFiles(deletimg);
     }
