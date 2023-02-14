@@ -56,17 +56,6 @@ const MainPage = () => {
         )
     }
 
-
-/*     const postList = postInfoList?.map((info, index)=> (
-        <PostBox 
-        onClick={OnClick} 
-        key={index} 
-        user={location} 
-        postInfo={info}
-        PostText={postTextList}
-        index={index}/>
-    )); */
-
     return(
         <Layout>
             <GlobalStyle/>
