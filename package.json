@@ -23,7 +23,7 @@
     "yarn-deduplicate": "^6.0.1"
   },
   "scripts": {
-    "start": "node server",
+    "start": "react-scripts start",
     "start:dev": "cross-env NODE_PATH=src react-scripts start",
     "build": "cross-env NODE_PATH=src react-scripts build",
     "test": "react-scripts test --env=jsdom",

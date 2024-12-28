@@ -1,16 +1,16 @@
-import React, { useRef, useState, useEffect } from 'react';
-import styled from 'styled-components';
+import React, { useEffect, useRef, useState } from 'react';
 import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css';
+import styled from 'styled-components';
 //아이콘
-import { CgProfile, CgMoreAlt } from 'react-icons/cg'
+import { CgMoreAlt, CgProfile } from 'react-icons/cg';
 
 const PostBox = (props) => {
 
     const [postMenu, setPostMenu] = useState(false);
     const bodyRef = useRef()
     const popUpRef = useRef();
-
+    console.log(props)
     const id = props.user.state.id;
     const file = props.postInfo;
     const index = props.index;

@@ -1,16 +1,16 @@
-import React, { useState, useRef} from 'react';
-import styled from 'styled-components';
 import axios from "axios";
+import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
+import styled from 'styled-components';
 // 컴포넌트
 import GlobalStyle from '../components/GlobalStyle';
-import JoinPage from '../components/JoinPage';
 import ImgSlider from '../components/ImgSlide';
+import JoinPage from '../components/JoinPage';
 // 이미지
-import LogoImg from '../imgs/Logo.png';
-import imgs from '../imgs/imgs.png';
 import GLink from '../imgs/GLink.png';
+import LogoImg from '../imgs/Logo.png';
 import MsLink from '../imgs/MsLink.png';
+import imgs from '../imgs/imgs.png';
 
 const LoginPage = () => {
 
@@ -24,10 +24,12 @@ const LoginPage = () => {
 
     async function getUser() {
         try {
-            const response = await axios.get('https://instargram-clone.herokuapp.com/account');
-            const user = response.data.find(
+          const response = await axios.get('/json/db.json');
+          console.log( response.data)
+            const user = response.data.account.find(
                 (users) => users.id === id && users.password === password
-            );
+          );
+          console.log(user)
             if (user === undefined){ 
                 setId('');
                 setPassword('');
